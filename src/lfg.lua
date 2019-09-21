@@ -5,12 +5,21 @@ lfg.defaults = {
   linkColor = "cffffc0c0",
 
   channel = {
-    ["1"] = false,
+    ["1"] = true,
     ["2"] = false,
     ["3"] = false,
     ["4"] = true,
     ["5"] = false,
     ["6"] = false
+  },
+
+  channelNames = {
+    "1. General",
+    "2. Trade",
+    "3. Local Defense",
+    "4. Looking For Group",
+    "5. World Defense",
+    "6. Cuild Recruitment"
   },
 
   searchTypes = {
