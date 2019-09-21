@@ -62,14 +62,14 @@ function lfg.handleChatEvent(...)
 
   for channel,listening in pairs(LFGSettings.channel) do
     if eventChan:find(channel) and listening then
-      lfg.parseMSG(msg, fromPlayer)
+      lfg.parseMSG(msg, fromPlayer, channel)
     end
   end
 
 end
 
 -- Parse the message to see if it meets our search criteria
-function lfg.parseMSG(msg, fromPlayer)
+function lfg.parseMSG(msg, fromPlayer, chanNum)
  
   local playerLink = "|"..LFGSettings.linkColor.."|Hplayer:"..fromPlayer.."|h["..fromPlayer.."]|h|r";
   local searchCrit1, searchCrit2, searchCrit3 = "", "", ""
@@ -97,9 +97,12 @@ function lfg.parseMSG(msg, fromPlayer)
   end
   
   if searchCrit1 ~= "" and searchCrit2 ~="" and searchCrit3 ~="" then
-    print("Found Possible Group:",playerLink, searchCrit1, searchCrit2, searchCrit3)
+    -- print("Found Possible Group:",playerLink, searchCrit1, searchCrit2, searchCrit3)
     PlaySound(SOUNDKIT.READY_CHECK)
-    print(playerLink.." "..msg)
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    print("["..chanNum.."] "..playerLink.." "..msg)
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    -- SendChatMessage("WOOT", "WHISPER", nil, UnitName("player"))
   end
   
 end
