@@ -4,13 +4,14 @@ local addonName, lfg = ...
 local frame, events = CreateFrame("Frame"), {};
 
 function events:CHAT_MSG_CHANNEL(...) -- Fired when the client receives a channel message.
+  print("Chat Message Sent")
   lfg.handleChatEvent(...)
 end
 
-function events:VARIABLES_LOADED(...) -- Player is Logged In
-  print("LFG Loaded: /lfg help")
-  lfg.loadOptions(self)
-end
+-- function events:PLAYER_LOGIN(...) -- Player is Logged In
+--   print("LFG Loaded: /lfg help")
+--   lfg.loadOptions()
+-- end
 
 -- Register Events Frame to OnEvent handler of Main Frame
 frame:SetScript("OnEvent", function(self, event, ...)

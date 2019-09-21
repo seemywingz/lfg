@@ -27,10 +27,10 @@ function lfg.commands(msg, editbox)
     lfg.showInfo()
 
   elseif cmd == "config" then
-    InterfaceOptionsFrame_OpenToCategory(addonName);
     -- Note: Call this function twice (in a row), 
     -- there is a bug in Blizzard's code which makes the first call (after login or /reload) fail. 
     -- It opens interface options, but not on the addon's interface options, just the default interface options. 
+    InterfaceOptionsFrame_OpenToCategory(addonName);
     InterfaceOptionsFrame_OpenToCategory(addonName);  
 
   elseif cmd == "disable" then
