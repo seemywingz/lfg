@@ -3,6 +3,7 @@ local addonName, lfg = ...
 lfg.defaults = {
 
   linkColor = "cffff00ff",
+  autoWhisper = false,
 
   channel = {
     ["1"] = true,
@@ -22,7 +23,7 @@ lfg.defaults = {
     "6. Guild Recruitment"
   },
 
-  searchCrit = {
+  criteria = {
     ["1"] = {
       "LF",
       "lf"
@@ -54,7 +55,6 @@ lfg.defaults = {
 
 }
 LFGSettings = LFGSettings or lfg.defaults
--- LFGSettings = lfg.defaults
 
 function lfg.handleChatEvent(...)
   local msg, fromPlayer, _, eventChan = ...
@@ -71,33 +71,22 @@ end
 -- Parse the message to see if it meets our search criteria
 function lfg.parseMSG(msg, fromPlayer, chanNum)
  
+  local matches = {}
   local playerLink = "|"..LFGSettings.linkColor.."|Hplayer:"..fromPlayer.."|h["..fromPlayer.."]|h|r";
-  local searchCrit1, searchCrit2, searchCrit3 = "", "", ""
+  local minCriteria = 0
   -- print(playerLink.." "..msg)
 
-  for _,s in pairs(LFGSettings.searchCrit["1"]) do
-    if msg:find(s) then
-      searchCrit1 = s
-      break
+  for _,searchCrit in pairs(LFGSettings.criteria) do
+    minCriteria = minCriteria + 1
+    for _,crit in pairs(searchCrit) do
+      if msg:find(crit) then
+        table.insert(matches, crit)
+        break
+      end
     end
   end
 
-  for _,s in pairs(LFGSettings.searchCrit["2"]) do
-    if msg:find(s) then
-      searchCrit2 = s
-      break
-    end
-  end
-
-  for _,s in pairs(LFGSettings.searchCrit["3"]) do
-    if msg:find(s) then
-      searchCrit3 = s
-      break
-    end
-  end
-  
-  if searchCrit1 ~= "" and searchCrit2 ~="" and searchCrit3 ~="" then
-    -- print("Found Possible Group:",playerLink, searchCrit1, searchCrit2, searchCrit3)
+  if table.getn(matches) >= minCriteria then
     PlaySound(SOUNDKIT.READY_CHECK)
     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     print("["..chanNum.."] "..playerLink.." "..msg)

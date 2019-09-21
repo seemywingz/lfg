@@ -13,6 +13,8 @@ end
 
 function lfg.loadOptions()
   -- print("LOADING OPTIONS!!!!!!!!!!!!")
+  -- LFGSettings = lfg.defaults
+
   local panel = CreateFrame("Frame");
   panel.name = addonName
   InterfaceOptions_AddCategory(panel);
@@ -45,10 +47,8 @@ function lfg.loadOptions()
   end
 
   function lfg.panel.default()
-    xpcall(function()
       print("!! LFG Set Defaults !!")
       LFGSettings = lfg.defaults
-    end, geterrorhandler())
   end
   
 end
