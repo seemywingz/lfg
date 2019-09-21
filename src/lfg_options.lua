@@ -27,13 +27,16 @@ function lfg.loadOptions()
   
   local relFrame = panel.chanCBTitle
   for i,chanName in ipairs(LFGSettings.channelNames) do
-    print(i, chanName)
     local cb = lfg.createCheckBox(panel, chanName, "TOPLEFT", relFrame, "BOTTOMLEFT", function(self)
       LFGSettings.channel[i] = self:GetChecked()
     end)
     cb:SetChecked(LFGSettings.channel[i])
     relFrame = cb
   end
+
+  panel.SC1Title = panel:CreateFontString("LFG_CRIT1_TITLE", "ARTWORK", "GameFontNormalLarge")
+  panel.SC1Title:SetPoint("TOPLEFT", relFrame, "BOTTOMLEFT")
+  panel.SC1Title:SetText("Search Criteria 1:")
   
   function lfg.panel.okay()
     xpcall(function()
