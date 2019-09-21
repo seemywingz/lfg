@@ -4,7 +4,7 @@ local addonName, lfg = ...
 local frame, events = CreateFrame("Frame"), {};
 
 function events:CHAT_MSG_CHANNEL(...) -- Fired when the client receives a channel message.
-  print("Chat Message Sent")
+  -- print("Chat Message Sent")
   lfg.handleChatEvent(...)
 end
 
