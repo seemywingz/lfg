@@ -1,17 +1,17 @@
 local addonName, lfg = ...
 
-lfgSettings = {}
-lfgSettings.linlColor = "cffffc0c0"
-lfgSettings.channels = {
+LFGSettings = {}
+LFGSettings.linkColor = "cffffc0c0"
+LFGSettings.channels = {
   "4. LookingForGroup"
 }
 
-lfgSettings.searchTypes = {
+LFGSettings.searchTypes = {
   "LF",
   "lf",
 }
 
-lfgSettings.searchCrit = {
+LFGSettings.searchCrit = {
   "HEAL",
   "heal",
   "Heal",
@@ -22,23 +22,19 @@ lfgSettings.searchCrit = {
   "dps"
 }
 
-lfgSettings.locations = {
+LFGSettings.locations = {
   "RFC",
   "rfc",
   "SFK",
   "sfk",
-  "ULD",
-  "uld",
   "WC",
-  "wc",
-  "mara",
-  "MARA"
+  "wc"
 }
 
 function lfg.handleChatEvent(...)
   local msg, fromPlayer, _, eventChan = ...
  
-  for k,channel in pairs(lfgSettings.channels) do
+  for k,channel in pairs(LFGSettings.channels) do
     if eventChan == channel then
       lfg.parseMSG(msg, fromPlayer)      
     end
@@ -50,24 +46,24 @@ end
 function lfg.parseMSG(msg, fromPlayer)
  
   local tokens = {}
-  local playerLink = "|"..lfgSettings.linlColor.."|Hplayer:"..fromPlayer.."|h["..fromPlayer.."]|h|r";
+  local playerLink = "|"..LFGSettings.linkColor.."|Hplayer:"..fromPlayer.."|h["..fromPlayer.."]|h|r";
   local searchType, searchCrit, location = "", "", ""
 
-  for _,s in pairs(lfgSettings.searchTypes) do
+  for _,s in pairs(LFGSettings.searchTypes) do
     if msg:find(s) then
       searchType = s
       break
     end
   end
 
-  for _,s in pairs(lfgSettings.searchCrit) do
+  for _,s in pairs(LFGSettings.searchCrit) do
     if msg:find(s) then
       searchCrit = s
       break
     end
   end
 
-  for _,s in pairs(lfgSettings.locations) do
+  for _,s in pairs(LFGSettings.locations) do
     if msg:find(s) then
       location = s
       break

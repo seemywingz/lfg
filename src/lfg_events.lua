@@ -8,10 +8,10 @@ function events:CHAT_MSG_CHANNEL(...) -- Fired when the client receives a channe
   lfg.handleChatEvent(...)
 end
 
--- function events:PLAYER_LOGIN(...) -- Player is Logged In
---   print("LFG Loaded: /lfg help")
---   lfg.loadOptions()
--- end
+function events:PLAYER_LOGIN(...) -- Player is Logged In
+  print("LFG Loaded: /lfg help")
+  lfg.loadOptions()
+end
 
 -- Register Events Frame to OnEvent handler of Main Frame
 frame:SetScript("OnEvent", function(self, event, ...)

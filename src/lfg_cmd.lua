@@ -11,7 +11,6 @@ end
 
 function lfg.showInfo()
   print("LFG:")
-  print(lfg)
 end
 
 -- SLASH COMMANDS
