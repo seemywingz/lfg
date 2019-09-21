@@ -13,18 +13,22 @@ end
 
 function lfg.loadOptions()
   -- print("LOADING OPTIONS!!!!!!!!!!!!")
-  local panel = CreateFrame("Frame", "MainFrame", InterfaceOptionsFramePanelContainer);
+  local panel = CreateFrame("Frame");
   panel.name = addonName
   InterfaceOptions_AddCategory(panel);
   
   panel.title = panel:CreateFontString("LFG_OPTIONS_TITLE", "ARTWORK", "GameFontNormalLarge")
   panel.title:SetPoint("TOPLEFT", 16, -16)
   panel.title:SetText(panel.name)
+
+  panel.chanCBTitle = panel:CreateFontString("LFG_CHANCB_TITLE", "ARTWORK", "GameFontNormalLarge")
+  panel.chanCBTitle:SetPoint("TOPLEFT", panel.title, "BOTTOMLEFT")
+  panel.chanCBTitle:SetText("Listen to Channel:")
   
-  local relFrame = panel.title
+  local relFrame = panel.chanCBTitle
   for i,chanName in ipairs(LFGSettings.channelNames) do
     print(i, chanName)
-    local cb = lfg.createCheckBox(panel, "Listen to Channel "..chanName, "TOPLEFT", relFrame, "BOTTOMLEFT", function(self)
+    local cb = lfg.createCheckBox(panel, chanName, "TOPLEFT", relFrame, "BOTTOMLEFT", function(self)
       LFGSettings.channel[i] = self:GetChecked()
     end)
     cb:SetChecked(LFGSettings.channel[i])

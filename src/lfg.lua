@@ -6,7 +6,7 @@ lfg.defaults = {
 
   channel = {
     ["1"] = true,
-    ["2"] = false,
+    ["2"] = true,
     ["3"] = false,
     ["4"] = true,
     ["5"] = false,
