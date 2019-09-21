@@ -1,53 +1,64 @@
 local addonName, lfg = ...
 
-LFGSettings = {}
-LFGSettings.linkColor = "cffffc0c0"
-LFGSettings.channels = {
-  "4. LookingForGroup"
-}
+lfg.defaults = {
 
-LFGSettings.searchTypes = {
-  "LF",
-  "lf",
-}
+  linkColor = "cffffc0c0",
 
-LFGSettings.searchCrit = {
-  "HEAL",
-  "heal",
-  "Heal",
-  "TANK",
-  "tank",
-  "Tank",
-  "DPS",
-  "dps"
-}
+  channel = {
+    ["1"] = false,
+    ["2"] = false,
+    ["3"] = false,
+    ["4"] = true,
+    ["5"] = false,
+    ["6"] = false
+  },
 
-LFGSettings.locations = {
-  "RFC",
-  "rfc",
-  "SFK",
-  "sfk",
-  "WC",
-  "wc"
+  searchTypes = {
+    "LF",
+    "lf",
+  },
+
+  searchCrit = {
+    "HEAL",
+    "heal",
+    "Heal",
+    "TANK",
+    "tank",
+    "Tank",
+    "DPS",
+    "dps"
+  },
+
+  locations = {
+    "RFC",
+    "rfc",
+    "SFK",
+    "sfk",
+    "WC",
+    "wc"
+  }
+
 }
+LFGSettings = LFGSettings or lfg.defaults
 
 function lfg.handleChatEvent(...)
   local msg, fromPlayer, _, eventChan = ...
- 
-  for k,channel in pairs(LFGSettings.channels) do
-    if eventChan == channel then
-      lfg.parseMSG(msg, fromPlayer)      
+  print("Chat Message: "..eventChan)
+
+  for channel,listening in pairs(LFGSettings.channel) do
+    if eventChan:find(channel) and listening then
+      lfg.parseMSG(msg, fromPlayer)
     end
   end
-  
+
 end
 
 -- Parse the message to see if they meet our search criteria
 function lfg.parseMSG(msg, fromPlayer)
  
-  local tokens = {}
   local playerLink = "|"..LFGSettings.linkColor.."|Hplayer:"..fromPlayer.."|h["..fromPlayer.."]|h|r";
   local searchType, searchCrit, location = "", "", ""
+  print(playerLink.." "..msg)
 
   for _,s in pairs(LFGSettings.searchTypes) do
     if msg:find(s) then
