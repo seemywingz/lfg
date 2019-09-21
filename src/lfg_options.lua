@@ -21,14 +21,14 @@ function lfg.loadOptions()
   panel.title:SetPoint("TOPLEFT", 16, -16)
   panel.title:SetText(panel.name)
   
-  local prevCB = panel.title
+  local relFrame = panel.title
   for i,chanName in ipairs(LFGSettings.channelNames) do
     print(i, chanName)
-    local cb = lfg.createCheckBox(panel, "Listen to Channel "..chanName, "TOPLEFT", prevCB, "BOTTOMLEFT", function(self)
+    local cb = lfg.createCheckBox(panel, "Listen to Channel "..chanName, "TOPLEFT", relFrame, "BOTTOMLEFT", function(self)
       LFGSettings.channel[i] = self:GetChecked()
     end)
     cb:SetChecked(LFGSettings.channel[i])
-    prevCB = cb
+    relFrame = cb
   end
   
   function lfg.panel.okay()
@@ -37,11 +37,11 @@ function lfg.loadOptions()
     end, geterrorhandler())
   end
 
-  -- function lfg.panel.default()
-  --   xpcall(function()
-  --     print("!! LFG Set Defaults !!")
-  --     LFGSettings = lfg.defaults
-  --   end, geterrorhandler())
-  -- end
+  function lfg.panel.default()
+    xpcall(function()
+      print("!! LFG Set Defaults !!")
+      LFGSettings = lfg.defaults
+    end, geterrorhandler())
+  end
   
 end
