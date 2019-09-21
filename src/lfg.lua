@@ -19,7 +19,7 @@ lfg.defaults = {
     "3. Local Defense",
     "4. Looking For Group",
     "5. World Defense",
-    "6. Cuild Recruitment"
+    "6. Guild Recruitment"
   },
 
   searchTypes = {
