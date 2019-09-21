@@ -21,22 +21,15 @@ function lfg.loadOptions()
   panel.title:SetPoint("TOPLEFT", 16, -16)
   panel.title:SetText(panel.name)
   
-  -- Force Defaults for Testing
-  -- LFGSettings = lfg.defaults
-  local chan1CB = lfg.createCheckBox(panel, "Listen to Channel 1. General", "TOPLEFT", panel.title, "BOTTOMLEFT", function(self)
-    LFGSettings.channel["1"] = self:GetChecked()
-  end)
-  chan1CB:SetChecked(LFGSettings.channel["1"])
-
-  local chan2CB = lfg.createCheckBox(panel, "Listen to Channel 2. Trade", "TOPLEFT", chan1CB, "BOTTOMLEFT", function(self)
-    LFGSettings.channel["2"] = self:GetChecked()
-  end)
-  chan1CB:SetChecked(LFGSettings.channel["1"])
-
-  local chan4CB = lfg.createCheckBox(panel, "Listen to Channel 4. Looking For Group", "TOPLEFT", chan2CB, "BOTTOMLEFT", function(self)
-    LFGSettings.channel["4"] = self:GetChecked()
-  end)
-  chan4CB:SetChecked(LFGSettings.channel["4"])
+  local prevCB = panel.title
+  for i,chanName in ipairs(LFGSettings.channelNames) do
+    print(i, chanName)
+    local cb = lfg.createCheckBox(panel, "Listen to Channel "..chanName, "TOPLEFT", prevCB, "BOTTOMLEFT", function(self)
+      LFGSettings.channel[i] = self:GetChecked()
+    end)
+    cb:SetChecked(LFGSettings.channel[i])
+    prevCB = cb
+  end
   
   function lfg.panel.okay()
     xpcall(function()
