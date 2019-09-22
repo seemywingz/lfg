@@ -59,7 +59,6 @@ LFGSettings = LFGSettings or lfg.defaults
 
 function lfg.handleChatEvent(...)
   local msg, fromPlayer, _, eventChannel = ...
-  -- print("Chat Message: "..eventChan)
 
   for channelNumber,listening in pairs(LFGSettings.channel) do
     if eventChannel:find(channelNumber) and listening then
@@ -75,7 +74,6 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
   local matches = {}
   local playerLink = "|"..LFGSettings.linkColor.."|Hplayer:"..fromPlayer.."|h["..fromPlayer.."]|h|r";
   local minCriteria = 0
-  -- print(playerLink.." "..msg)
 
   for _,searchCrit in pairs(LFGSettings.criteria) do
     minCriteria = minCriteria + 1
