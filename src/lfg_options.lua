@@ -101,6 +101,15 @@ function lfg.loadOptions()
   lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
   lfg.panel.inviteCB:Disable()
 
+  lfg.saveBTN = CreateFrame("Button", "MyButton", lfg.panel, "UIPanelButtonTemplate")
+  lfg.saveBTN:SetSize(80 ,22) -- width, height
+  lfg.saveBTN:SetText("Save")
+  lfg.saveBTN:SetPoint("TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT")
+  lfg.saveBTN:SetScript("OnClick", function()
+    lfg.panel.okay()
+    print("LFG Configs Saved!")
+  end) 
+
   -- Event Callbacks
   function lfg.panel.okay()
     xpcall(function()
