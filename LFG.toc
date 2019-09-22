@@ -4,7 +4,7 @@
 ## Notes: WoW Classic LFG Helper
 ## Author: SeeMyWings
 ## Version: 0.1.0
-## SavedVariables: LFGSettings
+## SavedVariablesPerCharacter: LFGSettings
 
 src\lfg.lua
 src\lfg_options.lua
