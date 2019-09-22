@@ -115,6 +115,10 @@ function lfg.loadOptions()
       LFGSettings = lfg.defaults
   end
 
+  -- function lfg.panel.cancel()
+  --   lfg.panel.refresh()
+  -- end
+
   function lfg.panel.refresh()
       lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
 
