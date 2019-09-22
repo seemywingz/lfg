@@ -95,11 +95,10 @@ function lfg.loadOptions()
   lfg.panel.whisperEB = lfg.createEditBox(lfg.panel, LFGSettings.whisperText, "LEFT", lfg.panel.whisperCB, "RIGHT")
   lfg.panel.whisperEB:SetPoint("LEFT", lfg.panel.whisperCB, "RIGHT", 70, 0)
 
-  lfg.panel.inviteCB = lfg.createCheckBox(lfg.panel, "Invite -- In Development", "TOPLEFT", lfg.panel.whisperCB, "BOTTOMLEFT", function(self)
+  lfg.panel.inviteCB = lfg.createCheckBox(lfg.panel, "Invite", "TOPLEFT", lfg.panel.whisperCB, "BOTTOMLEFT", function(self)
     LFGSettings.autoInvite = self:GetChecked()
   end)
   lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
-  lfg.panel.inviteCB:Disable()
 
   lfg.saveBTN = CreateFrame("Button", "MyButton", lfg.panel, "UIPanelButtonTemplate")
   lfg.saveBTN:SetSize(80 ,22) -- width, height

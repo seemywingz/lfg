@@ -86,9 +86,10 @@ end
 function lfg.parseMSG(msg, fromPlayer, channelNumber)
  
   local matches = {}
-  local playerLink = "|"..LFGSettings.linkColor.."|Hplayer:"..fromPlayer.."|h["..fromPlayer.."]|h|r";
   local minCriteria = 0
-
+  local playerName = fromPlayer:Split("-")[1]
+  local playerLink = "|"..LFGSettings.linkColor.."|Hplayer:"..playerName.."|h["..playerName.."]|h|r";
+  
   for _,searchCrit in pairs(LFGSettings.criteria) do
     if table.getn(searchCrit) > 0 then minCriteria = minCriteria + 1 end
     for _,crit in pairs(searchCrit) do
@@ -105,7 +106,10 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
     print("["..channelNumber.."] "..playerLink.." "..msg)
     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     if LFGSettings.autoWhisper then
-      SendChatMessage(LFGSettings.whisperText, "WHISPER", nil, fromPlayer:Split("-")[1])
+      SendChatMessage(LFGSettings.whisperText, "WHISPER", nil, playerName)
+    end
+    if LFGSettings.autoInvite then
+      InviteUnit(playerName)
     end
 
   end

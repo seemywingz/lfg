@@ -17,6 +17,6 @@ Channel Selection
 Three Sets of Search Criteria  
 Auto Whisper on Match  
 Custom Whisper Messages  
-Auto Invite on Match -- In Development
+Auto Invite on Match  
 
 
