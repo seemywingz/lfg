@@ -105,22 +105,22 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
     print("["..channelNumber.."] "..playerLink.." "..msg)
     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     if LFGSettings.autoWhisper then
-      SendChatMessage(LFGSettings.whisperText, "WHISPER", nil, UnitName("player"))
+      SendChatMessage(LFGSettings.whisperText, "WHISPER", nil, fromPlayer:Split("-")[1])
     end
 
   end
   
 end
 
--- function string:Split(sep)
---   if sep == nil then
---     sep = "%s"
---   end
---   local t={}
---   for str in string.gmatch(self, "([^"..sep.."]+)") do
---       table.insert(t, str)
---   end
---   return t
--- end
+function string:Split(sep)
+  if sep == nil then
+    sep = "%s"
+  end
+  local t={}
+  for str in string.gmatch(self, "([^"..sep.."]+)") do
+      table.insert(str)
+  end
+  return t
+end
 
 

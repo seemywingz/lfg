@@ -76,28 +76,30 @@ function lfg.loadOptions()
   end
 
   -- Criteria Edit Boxes
-  lfg.panel.crit1Title = lfg.createTitle(lfg.panel, "Search Criteria 1:", "TOPLEFT", relFrame, "BOTTOMLEFT")
-  lfg.panel.crit1EB = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria["1"]), "TOPLEFT", lfg.panel.crit1Title, "BOTTOMLEFT")
+  lfg.panel.critTitle = lfg.createTitle(lfg.panel, "Match Criteria: Leave Blank to Exclude", "TOPLEFT", relFrame, "BOTTOMLEFT")
+  lfg.panel.crit1Title = lfg.createTitle(lfg.panel, "  1:", "TOPLEFT", lfg.panel.critTitle, "BOTTOMLEFT")
+  lfg.panel.crit1EB = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria["1"]), "LEFT", lfg.panel.crit1Title, "RIGHT")
   
-  lfg.panel.crit2Title = lfg.createTitle(lfg.panel, "Search Criteria 2:", "TOPLEFT", lfg.panel.crit1EB, "BOTTOMLEFT")
-  lfg.panel.crit2EB = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria["2"]), "TOPLEFT", lfg.panel.crit2Title, "BOTTOMLEFT")
+  lfg.panel.crit2Title = lfg.createTitle(lfg.panel, "  2:", "TOPLEFT", lfg.panel.crit1Title, "BOTTOMLEFT")
+  lfg.panel.crit2EB = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria["2"]), "LEFT", lfg.panel.crit2Title, "RIGHT")
   
-  lfg.panel.crit3Title = lfg.createTitle(lfg.panel, "Search Criteria 3:", "TOPLEFT", lfg.panel.crit2EB, "BOTTOMLEFT")
-  lfg.panel.crit3EB = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria["3"]), "TOPLEFT", lfg.panel.crit3Title, "BOTTOMLEFT")
+  lfg.panel.crit3Title = lfg.createTitle(lfg.panel, "  3:", "TOPLEFT", lfg.panel.crit2Title, "BOTTOMLEFT")
+  lfg.panel.crit3EB = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria["3"]), "LEFT", lfg.panel.crit3Title, "RIGHT")
   
   -- Auto Whisper Check Box
-  lfg.panel.autoTitle = lfg.createTitle(lfg.panel, "Auto:", "TOPLEFT", lfg.panel.crit3EB, "BOTTOMLEFT")
-  lfg.panel.inviteCB = lfg.createCheckBox(lfg.panel, "Invite -- In Development", "TOPLEFT", lfg.panel.autoTitle, "BOTTOMLEFT", function(self)
+  lfg.panel.autoTitle = lfg.createTitle(lfg.panel, "Auto Response:", "TOPLEFT", lfg.panel.crit3Title, "BOTTOMLEFT")
+  lfg.panel.whisperCB = lfg.createCheckBox(lfg.panel, "Whisper:", "TOPLEFT", lfg.panel.autoTitle, "BOTTOMLEFT", function(self)
+    LFGSettings.autoWhisper = self:GetChecked()
+  end)
+  lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
+  lfg.panel.whisperEB = lfg.createEditBox(lfg.panel, LFGSettings.whisperText, "LEFT", lfg.panel.whisperCB, "RIGHT")
+  lfg.panel.whisperEB:SetPoint("LEFT", lfg.panel.whisperCB, "RIGHT", 70, 0)
+
+  lfg.panel.inviteCB = lfg.createCheckBox(lfg.panel, "Invite -- In Development", "TOPLEFT", lfg.panel.whisperCB, "BOTTOMLEFT", function(self)
     LFGSettings.autoInvite = self:GetChecked()
   end)
   lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
   lfg.panel.inviteCB:Disable()
-
-  lfg.panel.whisperCB = lfg.createCheckBox(lfg.panel, "Whisper", "TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT", function(self)
-    LFGSettings.autoWhisper = self:GetChecked()
-  end)
-  lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
-  lfg.panel.whisper3EB = lfg.createEditBox(lfg.panel, LFGSettings.whisperText, "TOPLEFT", lfg.panel.whisperCB, "BOTTOMLEFT")
 
   -- Event Callbacks
   function lfg.panel.okay()
@@ -105,6 +107,7 @@ function lfg.loadOptions()
       LFGSettings.criteria["1"] = lfg.stringToTable(lfg.panel.crit1EB:GetText())
       LFGSettings.criteria["2"] = lfg.stringToTable(lfg.panel.crit2EB:GetText())
       LFGSettings.criteria["3"] = lfg.stringToTable(lfg.panel.crit3EB:GetText())
+      LFGSettings.whisperText = lfg.panel.whisperEB:GetText()
     end, geterrorhandler())
   end
 
@@ -113,12 +116,10 @@ function lfg.loadOptions()
   end
 
   function lfg.panel.refresh()
-    xpcall(function()
       lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
 
       for i,cb in ipairs(lfg.panel.chanCB) do
         cb:SetChecked(LFGSettings.channel[i])
-        print("setting channel ",i,LFGSettings.channel[i])
       end
   
       lfg.panel.crit1EB:SetText(lfg.tableToString(LFGSettings.criteria["1"]))
@@ -127,9 +128,7 @@ function lfg.loadOptions()
   
       lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
       lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
-      lfg.panel.whisper3EB:SetText(LFGSettings.whisperText)
-    end, geterrorhandler())
-     
+      lfg.panel.whisperEB:SetText(LFGSettings.whisperText)
   end
   
 end
