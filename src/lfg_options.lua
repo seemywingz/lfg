@@ -62,11 +62,13 @@ function lfg.loadOptions()
 
   lfg.panel.chanCBTitle = lfg.createTitle(lfg.panel, "Listen to Channel:", "TOPLEFT", lfg.panel.enabledCB, "BOTTOMLEFT")
   local relFrame = lfg.panel.chanCBTitle
+  lfg.panel.chanCB = {}
   for i,chanName in ipairs(LFGSettings.channelNames) do
     local cb = lfg.createCheckBox(lfg.panel, chanName, "TOPLEFT", relFrame, "BOTTOMLEFT", function(self)
       LFGSettings.channel[i] = self:GetChecked()
     end)
     cb:SetChecked(LFGSettings.channel[i])
+    table.insert(lfg.panel.chanCB, cb)
     relFrame = cb
   end
 
@@ -87,6 +89,16 @@ function lfg.loadOptions()
 
   function lfg.panel.default()
       LFGSettings = lfg.defaults
+  end
+
+  function lfg.panel.refresh()
+    lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
+    lfg.panel.crit1EB:SetText(lfg.tableToString(LFGSettings.criteria["1"]))
+    lfg.panel.crit2EB:SetText(lfg.tableToString(LFGSettings.criteria["2"]))
+    lfg.panel.crit3EB:SetText(lfg.tableToString(LFGSettings.criteria["3"]))
+    for chan,listening in ipairs(LFGSettings.channel) do
+      lfg.panel.chanCB[chan]:SetChecked(listening)
+    end
   end
   
 end

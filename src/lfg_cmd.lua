@@ -6,7 +6,7 @@ function lfg.showHelp()
   print("  Enable: /lfg enable")
   print("  Disable: /lfg disable")
   print("  Configure: /lfg config")
-  print("  Print LFG Info: /lfg info")
+  print("  Toggle Enable/Disable: /lfg")
 end
 
 function lfg.showInfo()
@@ -21,9 +21,6 @@ function lfg.commands(msg, editbox)
    
   if cmd == "help" then
     lfg.showHelp()
-    
-  elseif cmd == "info" then
-    lfg.showInfo()
 
   elseif cmd == "config" then
     -- Note: Call this function twice (in a row), 
@@ -33,18 +30,18 @@ function lfg.commands(msg, editbox)
     InterfaceOptionsFrame_OpenToCategory(addonName);  
 
   elseif cmd == "disable" then
-    DisableAddOn(addonName)
     print(addonName .. " Disabled")
+    LFGSetting.enabled = false
     
   elseif cmd == "enable" then
-    EnableAddOn(addonName)
     print(addonName .. " Enabled")
+    LFGSetting.enabled = true
     
   -- elseif cmd == "remove" and args ~= "" then
   --   print("removing " .. args)
       
   else
-    lfg.showHelp()
+    lfg.toggle()
   end
 end
 

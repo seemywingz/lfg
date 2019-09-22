@@ -58,6 +58,17 @@ lfg.defaults = {
 }
 LFGSettings = LFGSettings or lfg.defaults
 
+function lfg.toggle()
+  if LFGSettings.enabled then
+    print(addonName .. " Disabled")
+    LFGSettings.enabled = false
+  else
+    print(addonName .. " Enabled")
+    LFGSettings.enabled = true
+  end
+end
+
+
 function lfg.handleChatEvent(...)
   if not LFGSettings.enabled  then return value  end
   local msg, fromPlayer, _, eventChannel = ...
