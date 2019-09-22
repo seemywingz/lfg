@@ -9,12 +9,12 @@ lfg.defaults = {
   whisperText = "I'm Down!",
 
   channel = {
-    ["1"] = true,
-    ["2"] = true,
-    ["3"] = false,
-    ["4"] = true,
-    ["5"] = false,
-    ["6"] = false
+    [1] = true,
+    [2] = true,
+    [3] = false,
+    [4] = true,
+    [5] = false,
+    [6] = false
   },
 
   channelNames = {
@@ -74,7 +74,7 @@ function lfg.handleChatEvent(...)
   if not LFGSettings.enabled  then return value  end
   local msg, fromPlayer, _, eventChannel = ...
 
-  for channelNumber,listening in pairs(LFGSettings.channel) do
+  for channelNumber,listening in ipairs(LFGSettings.channel) do
     if eventChannel:find(channelNumber) and listening then
       lfg.parseMSG(msg, fromPlayer, channelNumber)
     end
@@ -104,9 +104,23 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     print("["..channelNumber.."] "..playerLink.." "..msg)
     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    -- SendChatMessage("WOOT", "WHISPER", nil, UnitName("player"))
+    if LFGSettings.autoWhisper then
+      SendChatMessage(LFGSettings.whisperText, "WHISPER", nil, UnitName("player"))
+    end
+
   end
   
 end
+
+-- function string:Split(sep)
+--   if sep == nil then
+--     sep = "%s"
+--   end
+--   local t={}
+--   for str in string.gmatch(self, "([^"..sep.."]+)") do
+--       table.insert(t, str)
+--   end
+--   return t
+-- end
 
 

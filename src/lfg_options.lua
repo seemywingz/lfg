@@ -4,7 +4,7 @@ local uniquealyzer = 1;
 function lfg.createTitle(parent, text, point, relFrame, relPoinit)
   uniquealyzer = uniquealyzer + 1;
   local fs = parent:CreateFontString("LFG_PANEL_TITLE"..uniquealyzer, "ARTWORK", "GameFontNormalLarge")
-  fs:SetPoint(point, relFrame, relPoinit)
+  fs:SetPoint(point, relFrame, relPoinit, 0, -10)
   fs:SetText(text)
   return fs
 end
@@ -101,9 +101,11 @@ function lfg.loadOptions()
 
   -- Event Callbacks
   function lfg.panel.okay()
+    xpcall(function()
       LFGSettings.criteria["1"] = lfg.stringToTable(lfg.panel.crit1EB:GetText())
       LFGSettings.criteria["2"] = lfg.stringToTable(lfg.panel.crit2EB:GetText())
       LFGSettings.criteria["3"] = lfg.stringToTable(lfg.panel.crit3EB:GetText())
+    end, geterrorhandler())
   end
 
   function lfg.panel.default()
@@ -111,27 +113,23 @@ function lfg.loadOptions()
   end
 
   function lfg.panel.refresh()
-    lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
+    xpcall(function()
+      lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
 
-    for i,cb in ipairs(lfg.panel.chanCB) do
-      cb:SetChecked(LFGSettings.channel[tostring(i)])
-    end
-
-    lfg.panel.crit1EB:SetText(lfg.tableToString(LFGSettings.criteria["1"]))
-    lfg.panel.crit2EB:SetText(lfg.tableToString(LFGSettings.criteria["2"]))
-    lfg.panel.crit3EB:SetText(lfg.tableToString(LFGSettings.criteria["3"]))
-
-    lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
-    lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
-    lfg.panel.whisper3EB:SetText(LFGSettings.whisperText)
-    
-    -- Refresh UI?
-    local panel = InterfaceOptionsFramePanelContainer.displayedPanel
-    if panel.name == addonName and panel:IsVisible() then
-    	panel:Hide()
-    	panel:Show()
-    end
-
+      for i,cb in ipairs(lfg.panel.chanCB) do
+        cb:SetChecked(LFGSettings.channel[i])
+        print("setting channel ",i,LFGSettings.channel[i])
+      end
+  
+      lfg.panel.crit1EB:SetText(lfg.tableToString(LFGSettings.criteria["1"]))
+      lfg.panel.crit2EB:SetText(lfg.tableToString(LFGSettings.criteria["2"]))
+      lfg.panel.crit3EB:SetText(lfg.tableToString(LFGSettings.criteria["3"]))
+  
+      lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
+      lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
+      lfg.panel.whisper3EB:SetText(LFGSettings.whisperText)
+    end, geterrorhandler())
+     
   end
   
 end
