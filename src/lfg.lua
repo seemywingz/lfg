@@ -118,7 +118,7 @@ function string:Split(sep)
   end
   local t={}
   for str in string.gmatch(self, "([^"..sep.."]+)") do
-      table.insert(str)
+      table.insert(t, str)
   end
   return t
 end
