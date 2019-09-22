@@ -55,9 +55,12 @@ function lfg.loadOptions()
   lfg.panel.title = lfg.panel:CreateFontString("LFG_OPTIONS_TITLE", "ARTWORK", "GameFontNormalLarge")
   lfg.panel.title:SetPoint("TOPLEFT", 16, -16)
   lfg.panel.title:SetText(lfg.panel.name)
+  lfg.panel.enabledCB = lfg.createCheckBox(lfg.panel, "Enabled", "TOPLEFT", lfg.panel.title, "BOTTOMLEFT", function(self)
+    LFGSettings.enabled = self:GetChecked()
+  end)
+  lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
 
-  lfg.panel.chanCBTitle = lfg.createTitle(lfg.panel, "Listen to Channel:", "TOPLEFT", lfg.panel.title, "BOTTOMLEFT")
-  
+  lfg.panel.chanCBTitle = lfg.createTitle(lfg.panel, "Listen to Channel:", "TOPLEFT", lfg.panel.enabledCB, "BOTTOMLEFT")
   local relFrame = lfg.panel.chanCBTitle
   for i,chanName in ipairs(LFGSettings.channelNames) do
     local cb = lfg.createCheckBox(lfg.panel, chanName, "TOPLEFT", relFrame, "BOTTOMLEFT", function(self)
@@ -77,7 +80,6 @@ function lfg.loadOptions()
   lfg.panel.crit3EB = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria["3"]), "TOPLEFT", lfg.panel.crit3Title, "BOTTOMLEFT")
   
   function lfg.panel.okay()
-      print("!! LFG Updated !!")
       LFGSettings.criteria["1"] = lfg.stringToTable(lfg.panel.crit1EB:GetText())
       LFGSettings.criteria["2"] = lfg.stringToTable(lfg.panel.crit2EB:GetText())
       LFGSettings.criteria["3"] = lfg.stringToTable(lfg.panel.crit3EB:GetText())

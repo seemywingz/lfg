@@ -3,6 +3,7 @@ local addonName, lfg = ...
 lfg.defaults = {
 
   linkColor = "cffff00ff",
+  enabled = false,
   autoWhisper = false,
   autoInvite = false,
 
@@ -58,6 +59,7 @@ lfg.defaults = {
 LFGSettings = LFGSettings or lfg.defaults
 
 function lfg.handleChatEvent(...)
+  if not LFGSettings.enabled  then return value  end
   local msg, fromPlayer, _, eventChannel = ...
 
   for channelNumber,listening in pairs(LFGSettings.channel) do
