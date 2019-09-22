@@ -93,7 +93,8 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
   for _,searchCrit in pairs(LFGSettings.criteria) do
     if table.getn(searchCrit) > 0 then minCriteria = minCriteria + 1 end
     for _,crit in pairs(searchCrit) do
-      if msg:find(crit) then
+      print("Searching for pattern", msg:findI(crit))
+      if msg:findI(crit) then
         table.insert(matches, crit)
         break
       end
@@ -125,6 +126,20 @@ function string:Split(sep)
       table.insert(t, str)
   end
   return t
+end
+
+function string:findI(pattern)
+  -- find an optional '%' (group 1) followed by any character (group 2)
+  local p = pattern:gsub("(%%?)(.)", function(percent, letter)
+    if percent ~= "" or not letter:match("%a") then
+      -- if the '%' matched, or `letter` is not a letter, return "as is"
+      return percent .. letter
+    else
+      -- else, return a case-insensitive character class of the matched letter
+      return string.format("[%s%s]", letter:lower(), letter:upper())
+    end
+  end)
+  return self:find(p)
 end
 
 
