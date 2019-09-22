@@ -43,7 +43,7 @@ function lfg.stringToTable(s)
   for word in s:gmatch("%w+") do 
     table.insert(t, word) 
   end
-  return t
+  return t or {}
 end
 
 function lfg.loadOptions()
@@ -96,18 +96,20 @@ function lfg.loadOptions()
       LFGSettings = lfg.defaults
   end
 
+  -- Refresh the Options UI
   function lfg.panel.refresh()
-    -- Reset Enabled Check Box
     lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
 
-    -- Reset Channel Check Boxes
     for i,cb in ipairs(lfg.panel.chanCB) do
       cb:SetChecked(LFGSettings.channel[tostring(i)])
     end
 
-    -- Reset Criteria Edit Boxes
     lfg.panel.crit1EB:SetText(lfg.tableToString(LFGSettings.criteria["1"]))
+    
+    if not LFGSettings.criteria["2"] then LFGSettings.criteria["2"] = {} end
     lfg.panel.crit2EB:SetText(lfg.tableToString(LFGSettings.criteria["2"]))
+    
+    if not LFGSettings.criteria["3"] then LFGSettings.criteria["3"] = {} end
     lfg.panel.crit3EB:SetText(lfg.tableToString(LFGSettings.criteria["3"]))
     
     -- Refresh UI?
