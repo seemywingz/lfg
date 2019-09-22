@@ -2,10 +2,11 @@ local addonName, lfg = ...
 
 lfg.defaults = {
 
-  linkColor = "cffff00ff",
   enabled = false,
-  autoWhisper = false,
   autoInvite = false,
+  autoWhisper = false,
+  linkColor = "cffff00ff",
+  whisperText = "I'm Down!",
 
   channel = {
     ["1"] = true,

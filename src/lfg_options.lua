@@ -85,6 +85,20 @@ function lfg.loadOptions()
   lfg.panel.crit3Title = lfg.createTitle(lfg.panel, "Search Criteria 3:", "TOPLEFT", lfg.panel.crit2EB, "BOTTOMLEFT")
   lfg.panel.crit3EB = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria["3"]), "TOPLEFT", lfg.panel.crit3Title, "BOTTOMLEFT")
   
+  -- Auto Whisper Check Box
+  lfg.panel.autoTitle = lfg.createTitle(lfg.panel, "Auto:", "TOPLEFT", lfg.panel.crit3EB, "BOTTOMLEFT")
+  lfg.panel.inviteCB = lfg.createCheckBox(lfg.panel, "Invite -- In Development", "TOPLEFT", lfg.panel.autoTitle, "BOTTOMLEFT", function(self)
+    LFGSettings.autoInvite = self:GetChecked()
+  end)
+  lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
+  lfg.panel.inviteCB:Disable()
+
+  lfg.panel.whisperCB = lfg.createCheckBox(lfg.panel, "Whisper", "TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT", function(self)
+    LFGSettings.autoWhisper = self:GetChecked()
+  end)
+  lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
+  lfg.panel.whisper3EB = lfg.createEditBox(lfg.panel, LFGSettings.whisperText, "TOPLEFT", lfg.panel.whisperCB, "BOTTOMLEFT")
+
   -- Event Callbacks
   function lfg.panel.okay()
       LFGSettings.criteria["1"] = lfg.stringToTable(lfg.panel.crit1EB:GetText())
@@ -96,7 +110,6 @@ function lfg.loadOptions()
       LFGSettings = lfg.defaults
   end
 
-  -- Refresh the Options UI
   function lfg.panel.refresh()
     lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
 
@@ -105,12 +118,12 @@ function lfg.loadOptions()
     end
 
     lfg.panel.crit1EB:SetText(lfg.tableToString(LFGSettings.criteria["1"]))
-    
-    if not LFGSettings.criteria["2"] then LFGSettings.criteria["2"] = {} end
     lfg.panel.crit2EB:SetText(lfg.tableToString(LFGSettings.criteria["2"]))
-    
-    if not LFGSettings.criteria["3"] then LFGSettings.criteria["3"] = {} end
     lfg.panel.crit3EB:SetText(lfg.tableToString(LFGSettings.criteria["3"]))
+
+    lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
+    lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
+    lfg.panel.whisper3EB:SetText(LFGSettings.whisperText)
     
     -- Refresh UI?
     local panel = InterfaceOptionsFramePanelContainer.displayedPanel
