@@ -55,14 +55,17 @@ function lfg.loadOptions()
   lfg.panel.title = lfg.panel:CreateFontString("LFG_OPTIONS_TITLE", "ARTWORK", "GameFontNormalLarge")
   lfg.panel.title:SetPoint("TOPLEFT", 16, -16)
   lfg.panel.title:SetText(lfg.panel.name)
+  
+  -- Enabled Check Box
   lfg.panel.enabledCB = lfg.createCheckBox(lfg.panel, "Enabled", "TOPLEFT", lfg.panel.title, "BOTTOMLEFT", function(self)
     LFGSettings.enabled = self:GetChecked()
   end)
   lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
 
+  -- Channel Selction Check Boxes
+  lfg.panel.chanCB = {}
   lfg.panel.chanCBTitle = lfg.createTitle(lfg.panel, "Listen to Channel:", "TOPLEFT", lfg.panel.enabledCB, "BOTTOMLEFT")
   local relFrame = lfg.panel.chanCBTitle
-  lfg.panel.chanCB = {}
   for i,chanName in ipairs(LFGSettings.channelNames) do
     local cb = lfg.createCheckBox(lfg.panel, chanName, "TOPLEFT", relFrame, "BOTTOMLEFT", function(self)
       LFGSettings.channel[i] = self:GetChecked()
@@ -72,6 +75,7 @@ function lfg.loadOptions()
     relFrame = cb
   end
 
+  -- Criteria Edit Boxes
   lfg.panel.crit1Title = lfg.createTitle(lfg.panel, "Search Criteria 1:", "TOPLEFT", relFrame, "BOTTOMLEFT")
   lfg.panel.crit1EB = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria["1"]), "TOPLEFT", lfg.panel.crit1Title, "BOTTOMLEFT")
   
@@ -81,6 +85,7 @@ function lfg.loadOptions()
   lfg.panel.crit3Title = lfg.createTitle(lfg.panel, "Search Criteria 3:", "TOPLEFT", lfg.panel.crit2EB, "BOTTOMLEFT")
   lfg.panel.crit3EB = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria["3"]), "TOPLEFT", lfg.panel.crit3Title, "BOTTOMLEFT")
   
+  -- Event Callbacks
   function lfg.panel.okay()
       LFGSettings.criteria["1"] = lfg.stringToTable(lfg.panel.crit1EB:GetText())
       LFGSettings.criteria["2"] = lfg.stringToTable(lfg.panel.crit2EB:GetText())
@@ -92,13 +97,26 @@ function lfg.loadOptions()
   end
 
   function lfg.panel.refresh()
+    -- Reset Enabled Check Box
     lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
+
+    -- Reset Channel Check Boxes
+    for i,cb in ipairs(lfg.panel.chanCB) do
+      cb:SetChecked(LFGSettings.channel[tostring(i)])
+    end
+
+    -- Reset Criteria Edit Boxes
     lfg.panel.crit1EB:SetText(lfg.tableToString(LFGSettings.criteria["1"]))
     lfg.panel.crit2EB:SetText(lfg.tableToString(LFGSettings.criteria["2"]))
     lfg.panel.crit3EB:SetText(lfg.tableToString(LFGSettings.criteria["3"]))
-    for chan,listening in ipairs(LFGSettings.channel) do
-      lfg.panel.chanCB[chan]:SetChecked(listening)
+    
+    -- Refresh UI?
+    local panel = InterfaceOptionsFramePanelContainer.displayedPanel
+    if panel.name == addonName and panel:IsVisible() then
+    	panel:Hide()
+    	panel:Show()
     end
+
   end
   
 end
