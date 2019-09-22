@@ -89,7 +89,7 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
   local minCriteria = 0
 
   for _,searchCrit in pairs(LFGSettings.criteria) do
-    minCriteria = minCriteria + 1
+    if table.getn(searchCrit) > 0 then minCriteria = minCriteria + 1 end
     for _,crit in pairs(searchCrit) do
       if msg:find(crit) then
         table.insert(matches, crit)
