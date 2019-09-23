@@ -27,17 +27,17 @@ lfg.defaults = {
   },
 
   criteria = {
-    ["1"] = {
+    [1] = {
       "LF",
     },
 
-    ["2"] = {
-      "HEAL",
+    [2] = {
+      "HEALS",
       "TANK",
       "DPS",
     },
 
-    ["3"] = {
+    [3] = {
       "BFD",
       "SCHOLO",
       "ULD",

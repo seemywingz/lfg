@@ -31,7 +31,7 @@ function lfg.createEditBox(parent, text, point, relFrame, relPoint)
 end
 
 function lfg.tableToString(t)
-  local s = ""
+  local s = " "
   for k,v in pairs(t) do
     s = s .." ".. v
   end
@@ -76,18 +76,18 @@ function lfg.loadOptions()
   end
 
   -- Criteria Edit Boxes
+  lfg.panel.critEB = {}
   lfg.panel.critTitle = lfg.createTitle(lfg.panel, "Match Criteria: Leave Blank to Exclude", "TOPLEFT", relFrame, "BOTTOMLEFT")
-  lfg.panel.crit1Title = lfg.createTitle(lfg.panel, "  1:", "TOPLEFT", lfg.panel.critTitle, "BOTTOMLEFT")
-  lfg.panel.crit1EB = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria["1"]), "LEFT", lfg.panel.crit1Title, "RIGHT")
-  
-  lfg.panel.crit2Title = lfg.createTitle(lfg.panel, "  2:", "TOPLEFT", lfg.panel.crit1Title, "BOTTOMLEFT")
-  lfg.panel.crit2EB = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria["2"]), "LEFT", lfg.panel.crit2Title, "RIGHT")
-  
-  lfg.panel.crit3Title = lfg.createTitle(lfg.panel, "  3:", "TOPLEFT", lfg.panel.crit2Title, "BOTTOMLEFT")
-  lfg.panel.crit3EB = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria["3"]), "LEFT", lfg.panel.crit3Title, "RIGHT")
-  
+  relFrame = lfg.panel.critTitle
+  for i,crit in ipairs(LFGSettings.criteria) do
+    local title = lfg.createTitle(lfg.panel, "  "..i..":", "TOPLEFT", relFrame, "BOTTOMLEFT")
+    local eb = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria[i]), "LEFT", title, "RIGHT")
+    table.insert(lfg.panel.critEB, eb)
+    relFrame = title
+  end
+
   -- Auto Whisper Check Box
-  lfg.panel.autoTitle = lfg.createTitle(lfg.panel, "Auto Response:", "TOPLEFT", lfg.panel.crit3Title, "BOTTOMLEFT")
+  lfg.panel.autoTitle = lfg.createTitle(lfg.panel, "Auto Response:", "TOPLEFT", relFrame, "BOTTOMLEFT")
   lfg.panel.whisperCB = lfg.createCheckBox(lfg.panel, "Whisper:", "TOPLEFT", lfg.panel.autoTitle, "BOTTOMLEFT", function(self)
     LFGSettings.autoWhisper = self:GetChecked()
   end)
@@ -112,35 +112,42 @@ function lfg.loadOptions()
   -- Event Callbacks
   function lfg.panel.okay()
     xpcall(function()
-      LFGSettings.criteria["1"] = lfg.stringToTable(lfg.panel.crit1EB:GetText())
-      LFGSettings.criteria["2"] = lfg.stringToTable(lfg.panel.crit2EB:GetText())
-      LFGSettings.criteria["3"] = lfg.stringToTable(lfg.panel.crit3EB:GetText())
+
+      LFGSettings.criteria = {}
+      for i,eb in ipairs(lfg.panel.critEB) do
+        LFGSettings.criteria[i] = lfg.stringToTable(eb:GetText())
+      end
+      
+
       LFGSettings.whisperText = lfg.panel.whisperEB:GetText()
     end, geterrorhandler())
   end
 
   function lfg.panel.default()
+    xpcall(function()
       LFGSettings = lfg.defaults
+    end, geterrorhandler())
   end
 
-  -- function lfg.panel.cancel()
-  --   lfg.panel.refresh()
-  -- end
-
   function lfg.panel.refresh()
+    xpcall(function()
+
       lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
 
       for i,cb in ipairs(lfg.panel.chanCB) do
         cb:SetChecked(LFGSettings.channel[i])
       end
-  
-      lfg.panel.crit1EB:SetText(lfg.tableToString(LFGSettings.criteria["1"]))
-      lfg.panel.crit2EB:SetText(lfg.tableToString(LFGSettings.criteria["2"]))
-      lfg.panel.crit3EB:SetText(lfg.tableToString(LFGSettings.criteria["3"]))
+
+      for i,eb in ipairs(lfg.panel.critEB) do
+        print(eb, lfg.tableToString(LFGSettings.criteria[i]))
+        eb:SetText(lfg.tableToString(LFGSettings.criteria[i]))
+      end
   
       lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
       lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
       lfg.panel.whisperEB:SetText(LFGSettings.whisperText)
+    end, geterrorhandler())
+    
   end
   
 end
