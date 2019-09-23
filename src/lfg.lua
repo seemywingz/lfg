@@ -7,28 +7,17 @@ lfg.defaults = {
   autoWhisper = false,
   linkColor = "cffff00ff",
   whisperText = "I'm Down!",
+  maxChannels = 10,
+  channel = {},
 
-  channel = {
-    [1] = true,
-    [2] = true,
-    [3] = false,
-    [4] = true,
-    [5] = false,
-    [6] = false
-  },
-
-  channelNames = {
-    "1. General",
-    "2. Trade",
-    "3. Local Defense",
-    "4. Looking For Group",
-    "5. World Defense",
-    "6. Guild Recruitment"
-  },
 
   criteria = {
     [1] = {
       "LF",
+      "LFG",
+      "LFM",
+      "LF1M",
+      "LF2M"
     },
 
     [2] = {
@@ -47,6 +36,51 @@ lfg.defaults = {
 
 }
 LFGSettings = LFGSettings or lfg.defaults
+-- LFGSettings = lfg.defaults
+
+-- String Helpers
+function string:Split(sep)
+  if sep == nil then
+    sep = "%s"
+  end
+  local t={}
+  for str in string.gmatch(self, "([^"..sep.."]+)") do
+      table.insert(t, str)
+  end
+  return t
+end
+
+function string:FindI(pattern)
+  -- find an optional '%' (group 1) followed by any character (group 2)
+  local p = pattern:gsub("(%%?)(.)", function(percent, letter)
+    if percent ~= "" or not letter:match("%a") then
+      -- if the '%' matched, or `letter` is not a letter, return "as is"
+      return percent .. letter
+    else
+      -- else, return a case-insensitive character class of the matched letter
+      return string.format("[%s%s]", letter:lower(), letter:upper())
+    end
+  end)
+  return self:find(p)
+end
+
+function string:ToTable()
+  local t = {}
+  for word in self:gmatch("%w+") do 
+    table.insert(t, word) 
+  end
+  return t or {}
+end
+
+-- Table Helpers
+function table.ToString(t)
+  local s = " "
+  for k,v in pairs(t) do
+    s = s .." ".. v
+  end
+  return s
+end
+
 
 function lfg.toggle()
   if LFGSettings.enabled then
@@ -63,7 +97,7 @@ function lfg.handleChatEvent(...)
   if not LFGSettings.enabled  then return value  end
   local msg, fromPlayer, _, eventChannel = ...
 
-  for channelNumber,listening in ipairs(LFGSettings.channel) do
+  for channelNumber, listening in pairs(LFGSettings.channel) do
     if eventChannel:find(channelNumber) and listening then
       lfg.parseMSG(msg, fromPlayer, channelNumber)
     end
@@ -76,13 +110,15 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
  
   local matches = {}
   local minCriteria = 0
-  local playerName = fromPlayer:Split("-")[1]
+
+  -- chat event returns "playername-servername", so we split on `-` and take the first value
+  local playerName = fromPlayer:Split("-")[1] 
   local playerLink = "|"..LFGSettings.linkColor.."|Hplayer:"..playerName.."|h["..playerName.."]|h|r";
   
   for _,searchCrit in pairs(LFGSettings.criteria) do
     if table.getn(searchCrit) > 0 then minCriteria = minCriteria + 1 end
     for _,crit in pairs(searchCrit) do
-      if msg:findI(crit) then
+      if msg:FindI(crit) then
         table.insert(matches, crit)
         break
       end
@@ -104,30 +140,3 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
   end
   
 end
-
-function string:Split(sep)
-  if sep == nil then
-    sep = "%s"
-  end
-  local t={}
-  for str in string.gmatch(self, "([^"..sep.."]+)") do
-      table.insert(t, str)
-  end
-  return t
-end
-
-function string:findI(pattern)
-  -- find an optional '%' (group 1) followed by any character (group 2)
-  local p = pattern:gsub("(%%?)(.)", function(percent, letter)
-    if percent ~= "" or not letter:match("%a") then
-      -- if the '%' matched, or `letter` is not a letter, return "as is"
-      return percent .. letter
-    else
-      -- else, return a case-insensitive character class of the matched letter
-      return string.format("[%s%s]", letter:lower(), letter:upper())
-    end
-  end)
-  return self:find(p)
-end
-
-

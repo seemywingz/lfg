@@ -30,23 +30,8 @@ function lfg.createEditBox(parent, text, point, relFrame, relPoint)
   return eb
 end
 
-function lfg.tableToString(t)
-  local s = " "
-  for k,v in pairs(t) do
-    s = s .." ".. v
-  end
-  return s
-end
-
-function lfg.stringToTable(s)
-  local t = {}
-  for word in s:gmatch("%w+") do 
-    table.insert(t, word) 
-  end
-  return t or {}
-end
-
 function lfg.loadOptions()
+  LFGSettings = lfg.defaults
 
   lfg.panel = CreateFrame("Frame");
   lfg.panel.name = addonName
@@ -66,13 +51,18 @@ function lfg.loadOptions()
   lfg.panel.chanCB = {}
   lfg.panel.chanCBTitle = lfg.createTitle(lfg.panel, "Listen to Channel:", "TOPLEFT", lfg.panel.enabledCB, "BOTTOMLEFT")
   local relFrame = lfg.panel.chanCBTitle
-  for i,chanName in ipairs(LFGSettings.channelNames) do
-    local cb = lfg.createCheckBox(lfg.panel, chanName, "TOPLEFT", relFrame, "BOTTOMLEFT", function(self)
-      LFGSettings.channel[i] = self:GetChecked()
-    end)
-    cb:SetChecked(LFGSettings.channel[i])
-    table.insert(lfg.panel.chanCB, cb)
-    relFrame = cb
+  
+  for i = 1, LFGSettings.maxChannels do
+    local id, chanName = GetChannelName(i);
+    if (id > 0 and chanName ~= nil) then
+      LFGSettings.channel[id] = false
+      local cb = lfg.createCheckBox(lfg.panel, id..". "..chanName, "TOPLEFT", relFrame, "BOTTOMLEFT", function(self)
+        LFGSettings.channel[id] = self:GetChecked()
+      end)
+      cb:SetChecked(LFGSettings.channel[i])
+      table.insert(lfg.panel.chanCB, cb)
+      relFrame = cb
+    end
   end
 
   -- Criteria Edit Boxes
@@ -81,7 +71,7 @@ function lfg.loadOptions()
   relFrame = lfg.panel.critTitle
   for i,crit in ipairs(LFGSettings.criteria) do
     local title = lfg.createTitle(lfg.panel, "  "..i..":", "TOPLEFT", relFrame, "BOTTOMLEFT")
-    local eb = lfg.createEditBox(lfg.panel, lfg.tableToString(LFGSettings.criteria[i]), "LEFT", title, "RIGHT")
+    local eb = lfg.createEditBox(lfg.panel, table.ToString(LFGSettings.criteria[i]), "LEFT", title, "RIGHT")
     table.insert(lfg.panel.critEB, eb)
     relFrame = title
   end
@@ -109,15 +99,13 @@ function lfg.loadOptions()
     print("LFG Configs Saved!")
   end) 
 
-  -- Event Callbacks
+  -- Panel Event Callbacks
   function lfg.panel.okay()
     xpcall(function()
 
-      LFGSettings.criteria = {}
       for i,eb in ipairs(lfg.panel.critEB) do
-        LFGSettings.criteria[i] = lfg.stringToTable(eb:GetText())
+        LFGSettings.criteria[i] = eb:GetText():ToTable()
       end
-      
 
       LFGSettings.whisperText = lfg.panel.whisperEB:GetText()
     end, geterrorhandler())
@@ -139,8 +127,8 @@ function lfg.loadOptions()
       end
 
       for i,eb in ipairs(lfg.panel.critEB) do
-        print(eb, lfg.tableToString(LFGSettings.criteria[i]))
-        eb:SetText(lfg.tableToString(LFGSettings.criteria[i]))
+        print(eb, table.ToString(LFGSettings.criteria[i]))
+        eb:SetText(table.ToString(LFGSettings.criteria[i]))
       end
   
       lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
