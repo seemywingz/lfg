@@ -1,5 +1,6 @@
 local addonName, lfg = ...
 
+lfg.version = GetAddOnMetadata(addonName, "Version")
 lfg.defaults = {
 
   enabled = false,

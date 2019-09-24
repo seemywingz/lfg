@@ -53,7 +53,7 @@ function lfg.loadOptions()
   
   lfg.panel.title = lfg.panel:CreateFontString("LFG_OPTIONS_TITLE", "ARTWORK", "GameFontNormalLarge")
   lfg.panel.title:SetPoint("TOPLEFT", 16, -16)
-  lfg.panel.title:SetText(lfg.panel.name)
+  lfg.panel.title:SetText(lfg.panel.name.." "..lfg.version)
   
   -- Enabled Check Box
   lfg.panel.enabledCB = lfg.createCheckBox(lfg.panel, "Enabled", "TOPLEFT", lfg.panel.title, "BOTTOMLEFT", function(self)
@@ -101,7 +101,7 @@ function lfg.loadOptions()
   end)
   lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
 
-  lfg.saveBTN = CreateFrame("Button", "MyButton", lfg.panel, "UIPanelButtonTemplate")
+  lfg.saveBTN = CreateFrame("Button", "LFG_SAVE_BTN", lfg.panel, "UIPanelButtonTemplate")
   lfg.saveBTN:SetSize(80 ,22) -- width, height
   lfg.saveBTN:SetText("Save")
   lfg.saveBTN:SetPoint("TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT")
