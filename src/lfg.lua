@@ -146,9 +146,11 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
   
 end
 
+local uniquealyzer = 0;
 function lfg.shoPopUp(text, btn1, btn2, btn3, accept, cancel, hide )
-  local popupName = addonName .. "POPUP_ALERT"
-  local timeout = 20
+  uniquealyzer = uniquealyzer + 1;
+  local popupName = addonName .. "POPUP_ALERT_" .. uniquealyzer
+  local timeout = 30
   StaticPopupDialogs[popupName] = {
     text = text,
     button1 = btn1,
