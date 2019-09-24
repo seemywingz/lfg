@@ -88,6 +88,7 @@ If some Options UI elements aren't showing up after an update, click the `Defaul
 ## 🎉Version 1.2.3 has some **MAJOR** Updates!   👏👏 👏
 ### Dynamic Channels
 * Channels are now Dynamically generated from your current list of chanels
+* Reload `Defaults` to puckup channel changes...  
 ### Add Dynamic Criteria:  
 * Add +/- buttons to the Match Criteria  
 * you can now dynamically add or remove criteria
