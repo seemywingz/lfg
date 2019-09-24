@@ -11,7 +11,7 @@ and **LFG** will allert you when there is a match!
 **LFG** works for more than just goup searches...  
 Tell **LFG** to watch for `WTB` or `WTS` chat messages too, the possibilities are literally endless ∞
 
-### Options:
+### Options:
 Enable/Disable  
 Channel Selection  
 Three Sets of Search Criteria  
@@ -20,9 +20,9 @@ Custom Whisper Messages
 Auto Invite on Match  
 
 ### Commands  
-Help:                                          /lfg help  
-Config:                                       /lfg config  
-Toggle Enabled/Disabled:          /lfg  
+Help:                    /lfg help  
+Config:                  /lfg config  
+Toggle Enabled/Disabled: /lfg  
 
 ### Example Configuration
 **LFG Enabled:** Yes  
