@@ -14,7 +14,7 @@ Tell **LFG** to watch for `WTB` or `WTS` chat messages too, the poss
 ### Options:
 Enable/Disable  
 Channel Selection  
-Three Sets of Search Criteria  
+Dynamic Set of Search Criteria  
 Auto Whisper on Match  
 Custom Whisper Messages  
 Auto Invite on Match  
