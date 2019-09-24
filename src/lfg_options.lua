@@ -30,6 +30,20 @@ function lfg.createEditBox(parent, text, point, relFrame, relPoint)
   return eb
 end
 
+function lfg.getChannels()
+
+  local channels = {}
+  for i = 1, LFGSettings.maxChannels do
+    local id, chanName = GetChannelName(i);
+    if (id > 0 and chanName ~= nil) then
+      channels[id] = chanName
+    end
+  end
+  return channels
+  
+end
+
+
 function lfg.loadOptions()
   LFGSettings = lfg.defaults
 
@@ -48,21 +62,18 @@ function lfg.loadOptions()
   lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
 
   -- Channel Selction Check Boxes
-  lfg.panel.chanCB = {}
-  lfg.panel.chanCBTitle = lfg.createTitle(lfg.panel, "Listen to Channel:", "TOPLEFT", lfg.panel.enabledCB, "BOTTOMLEFT")
-  local relFrame = lfg.panel.chanCBTitle
+  lfg.panel.chanCheckBox = {}
+  lfg.panel.chanCheckBoxTitle = lfg.createTitle(lfg.panel, "Listen to Channel:", "TOPLEFT", lfg.panel.enabledCB, "BOTTOMLEFT")
+  local relFrame = lfg.panel.chanCheckBoxTitle
   
-  for i = 1, LFGSettings.maxChannels do
-    local id, chanName = GetChannelName(i);
-    if (id > 0 and chanName ~= nil) then
-      LFGSettings.channel[id] = false
-      local cb = lfg.createCheckBox(lfg.panel, id..". "..chanName, "TOPLEFT", relFrame, "BOTTOMLEFT", function(self)
-        LFGSettings.channel[id] = self:GetChecked()
+  for chanNum,chanName in pairs(lfg.getChannels()) do
+      LFGSettings.channel[chanNum] = false
+      local cb = lfg.createCheckBox(lfg.panel, chanNum..". "..chanName, "TOPLEFT", relFrame, "BOTTOMLEFT", function(self)
+        LFGSettings.channel[chanNum] = self:GetChecked()
       end)
-      cb:SetChecked(LFGSettings.channel[i])
-      table.insert(lfg.panel.chanCB, cb)
+      cb:SetChecked(LFGSettings.channel[chanNum])
+      table.insert(lfg.panel.chanCheckBox, cb)
       relFrame = cb
-    end
   end
 
   -- Criteria Edit Boxes
@@ -70,7 +81,7 @@ function lfg.loadOptions()
   lfg.panel.critTitle = lfg.createTitle(lfg.panel, "Match Criteria: Leave Blank to Exclude", "TOPLEFT", relFrame, "BOTTOMLEFT")
   relFrame = lfg.panel.critTitle
   for i,crit in ipairs(LFGSettings.criteria) do
-    local title = lfg.createTitle(lfg.panel, "  "..i..":", "TOPLEFT", relFrame, "BOTTOMLEFT")
+    local title = lfg.createTitle(lfg.panel, "  "..i..":  ", "TOPLEFT", relFrame, "BOTTOMLEFT")
     local eb = lfg.createEditBox(lfg.panel, table.ToString(LFGSettings.criteria[i]), "LEFT", title, "RIGHT")
     table.insert(lfg.panel.critEB, eb)
     relFrame = title
@@ -83,7 +94,7 @@ function lfg.loadOptions()
   end)
   lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
   lfg.panel.whisperEB = lfg.createEditBox(lfg.panel, LFGSettings.whisperText, "LEFT", lfg.panel.whisperCB, "RIGHT")
-  lfg.panel.whisperEB:SetPoint("LEFT", lfg.panel.whisperCB, "RIGHT", 70, 0)
+  lfg.panel.whisperEB:SetPoint("LEFT", lfg.panel.whisperCB, "RIGHT", 80, 0)
 
   lfg.panel.inviteCB = lfg.createCheckBox(lfg.panel, "Invite", "TOPLEFT", lfg.panel.whisperCB, "BOTTOMLEFT", function(self)
     LFGSettings.autoInvite = self:GetChecked()
@@ -122,7 +133,7 @@ function lfg.loadOptions()
 
       lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
 
-      for i,cb in ipairs(lfg.panel.chanCB) do
+      for i,cb in ipairs(lfg.panel.chanCheckBox) do
         cb:SetChecked(LFGSettings.channel[i])
       end
 
