@@ -93,8 +93,8 @@ function lfg.loadOptions()
     LFGSettings.autoWhisper = self:GetChecked()
   end)
   lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
-  lfg.panel.whisperEB = lfg.createEditBox(lfg.panel, LFGSettings.whisperText, "LEFT", lfg.panel.whisperCB, "RIGHT")
-  lfg.panel.whisperEB:SetPoint("LEFT", lfg.panel.whisperCB, "RIGHT", 80, 0)
+  lfg.panel.whisperEditBox = lfg.createEditBox(lfg.panel, LFGSettings.whisperText, "LEFT", lfg.panel.whisperCB, "RIGHT")
+  lfg.panel.whisperEditBox:SetPoint("LEFT", lfg.panel.whisperCB, "RIGHT", 80, 0)
 
   lfg.panel.inviteCB = lfg.createCheckBox(lfg.panel, "Invite", "TOPLEFT", lfg.panel.whisperCB, "BOTTOMLEFT", function(self)
     LFGSettings.autoInvite = self:GetChecked()
@@ -112,24 +112,19 @@ function lfg.loadOptions()
 
   -- Panel Event Callbacks
   function lfg.panel.okay()
-    xpcall(function()
 
       for i,eb in ipairs(lfg.panel.critEB) do
         LFGSettings.criteria[i] = eb:GetText():ToTable()
       end
+      LFGSettings.whisperText = lfg.panel.whisperEditBox:GetText()
 
-      LFGSettings.whisperText = lfg.panel.whisperEB:GetText()
-    end, geterrorhandler())
   end
 
   function lfg.panel.default()
-    xpcall(function()
       LFGSettings = lfg.defaults
-    end, geterrorhandler())
   end
 
   function lfg.panel.refresh()
-    xpcall(function()
 
       lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
 
@@ -144,8 +139,7 @@ function lfg.loadOptions()
   
       lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
       lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
-      lfg.panel.whisperEB:SetText(LFGSettings.whisperText)
-    end, geterrorhandler())
+      lfg.panel.whisperEditBox:SetText(LFGSettings.whisperText)
     
   end
   
