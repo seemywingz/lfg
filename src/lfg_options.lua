@@ -69,7 +69,7 @@ function lfg.loadOptions()
   
   lfg.panel.title = lfg.panel:CreateFontString("LFG_OPTIONS_TITLE", "ARTWORK", "GameFontNormalLarge")
   lfg.panel.title:SetPoint("TOPLEFT", 16, -16)
-  lfg.panel.title:SetText(lfg.panel.name.." "..lfg.version)
+  lfg.panel.title:SetText(lfg.panel.name.." "..LFGSettings.version)
   
   -- Enabled Check Box
   lfg.panel.enabledCB = lfg.createCheckBox(lfg.panel, "Enabled", "TOPLEFT", lfg.panel.title, "BOTTOMLEFT", function(self)

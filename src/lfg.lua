@@ -1,8 +1,8 @@
 local addonName, lfg = ...
 
-lfg.version = GetAddOnMetadata(addonName, "Version")
 lfg.defaults = {
 
+  version = GetAddOnMetadata(addonName, "Version"),
   enabled = false,
   autoInvite = false,
   autoWhisper = false,
@@ -23,7 +23,6 @@ lfg.defaults = {
 
 }
 LFGSettings = LFGSettings or lfg.defaults
--- LFGSettings = lfg.defaults
 
 -- String Helpers
 function string:Split(sep)
