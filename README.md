@@ -76,10 +76,10 @@ Matches: "LF1M DPS ULD", "LFM HEALS ULD", "LFM DPS SCHOLO", etc..
 Ignored: "DPS LFG ULD", "SCHOLO need 1 more DPS", "LF TANK ULD" etc..  
 
 ### Chosing the Right Criteria -- Troubleshooting
-If you think yoy may be missing some chat messages, keep an eye on chat to see whats being said  
+If you think you may be missing some chat messages, keep an eye on chat to see whats being said  
 Did someone say `LF1M` and you were only matching on `LFM`?  
 Matches are case-insensitive, so no need to add `DPS` and `dps` etc...  
-If some Oprions UI elements aren't showing up after an update, click the `Defaults` button to reset  
+If some Options UI elements aren't showing up after an update, click the `Defaults` button to reset  
 
 #### I'd love to hear your feedback, please leave comments or open tickets for feature requests and issues  
 &nbsp;  
