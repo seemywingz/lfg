@@ -85,7 +85,7 @@ If some Options UI elements aren't showing up after an update, click the `Defaul
 &nbsp;  
 &nbsp;  
 
-## 🎉Version 1.2.1 has some **MAJOR** Updates!   👏👏 👏
+## 🎉Version 1.2.3 has some **MAJOR** Updates!   👏👏 👏
 ### Dynamic Channels
 * Channels are noy Dynamically generated from your current list of chanels
 ### Add Dynamic Criteria:  
