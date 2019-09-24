@@ -14,24 +14,10 @@ lfg.defaults = {
 
   criteria = {
     [1] = {
-      "LF",
-      "LFG",
-      "LFM",
-      "LF1M",
-      "LF2M"
-    },
-
-    [2] = {
       "HEALS",
       "TANK",
       "DPS",
     },
-
-    [3] = {
-      "BFD",
-      "SCHOLO",
-      "ULD",
-    }
 
   }
 
@@ -80,19 +66,6 @@ function table.ToString(t)
     s = s .." ".. v
   end
   return s
-end
-
-function table.Copy(src, dst)
-  if type(src) ~= "table" then return {} end
-	if type(dst) ~= "table" then dst = {} end
-	for k, v in pairs(src) do
-		if type(v) == "table" then
-			dst[k] = table.Copy(v, dst[k])
-		elseif type(v) ~= type(dst[k]) then
-			dst[k] = v
-		end
-	end
-	return dst
 end
 
 function table.RemoveLast(t)

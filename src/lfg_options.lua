@@ -52,6 +52,15 @@ function lfg.createButton(parent, text, point, relFrame, relPoinit, onClick)
   return btn
 end
 
+function lfg.refresh()
+  lfg.removeInterfaceOptions(addonName, false)
+  InterfaceOptionsFrame_Show() 
+  lfg.loadOptions()
+  InterfaceOptionsFrame_OpenToCategory(addonName);
+  InterfaceOptionsFrame_OpenToCategory(addonName);
+end
+
+
 function lfg.loadOptions()
 
   lfg.panel = CreateFrame("Frame");
@@ -74,7 +83,7 @@ function lfg.loadOptions()
   local relFrame = lfg.panel.chanCheckBoxTitle
   
   for chanNum,chanName in pairs(lfg.getChannels()) do
-      LFGSettings.channel[chanNum] = false
+      LFGSettings.channel[chanNum] = LFGSettings.channel[chanNum] or false
       local cb = lfg.createCheckBox(lfg.panel, chanNum..". "..chanName, "TOPLEFT", relFrame, "BOTTOMLEFT", function(self)
         LFGSettings.channel[chanNum] = self:GetChecked()
       end)
@@ -85,18 +94,19 @@ function lfg.loadOptions()
 
   -- Criteria 
   lfg.panel.critEB = {}
-  lfg.panel.critTitle = lfg.createTitle(lfg.panel, "Match Criteria: Leave Blank to Exclude  ", "TOPLEFT", relFrame, "BOTTOMLEFT")
+  lfg.panel.critTitle = lfg.createTitle(lfg.panel, "Match Criteria: ", "TOPLEFT", relFrame, "BOTTOMLEFT")
  
   lfg.panel.critAddBTN = lfg.createButton(lfg.panel, "+", "LEFT", lfg.panel.critTitle, "RIGHT", function()
     print("LFG: Adding Criteria")
     table.insert(LFGSettings.criteria, {"New", "Criteria"})
-    lfg.removeInterfaceOptions(addonName, true)
+    lfg.refresh()
   end)
   lfg.panel.critAddBTN:SetSize(20 ,22) -- width, height
 
   lfg.panel.critRemoveBTN = lfg.createButton(lfg.panel, "-", "LEFT", lfg.panel.critAddBTN, "RIGHT", function()
     print("LFG: Removing Criteria")
     table.RemoveLast(LFGSettings.criteria)
+    lfg.refresh()
   end)
   lfg.panel.critRemoveBTN:SetSize(20 ,22) -- width, height
 
@@ -140,7 +150,8 @@ function lfg.loadOptions()
   end
 
   function lfg.panel.default()
-      LFGSettings = table.Copy(LFGSettings, lfg.defaults)
+      LFGSettings = lfg.defaults
+      lfg.refresh()
   end
 
   function lfg.panel.refresh()
@@ -152,7 +163,6 @@ function lfg.loadOptions()
       end
 
       for i,eb in ipairs(lfg.panel.critEB) do
-        print(eb, table.ToString(LFGSettings.criteria[i]))
         eb:SetText(table.ToString(LFGSettings.criteria[i]))
       end
   
