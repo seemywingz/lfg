@@ -2,16 +2,16 @@ LFG
 --------------------------
 World of Warcraft Chat Addon
 
-## Tired of watching chat to find a group? 😭  
-## Your problems have been solved! 😮  
 
+## Tired of watching chat to find a group? 😭
+## Your problems have been solved! 😮
 **LFG** watches chat for you...  
 Just tell **LFG** what criteria to watch for e.g. `LFG DPS RFC`  
 and **LFG** will allert you when there is a match!  
 **LFG** works for more than just goup searches...  
 Tell **LFG** to watch for `WTB` or `WTS` chat messages too, the possibilities are literally endless ∞
 
-### Options:
+### Options:
 Enable/Disable  
 Channel Selection  
 Three Sets of Search Criteria  
@@ -20,9 +20,9 @@ Custom Whisper Messages
 Auto Invite on Match  
 
 ### Commands  
-Help:                    /lfg help  
-Config:                  /lfg config  
-Toggle Enabled/Disabled: /lfg  
+Help:                                          /lfg help  
+Config:                                       /lfg config  
+Toggle Enabled/Disabled:          /lfg  
 
 ### Example Configuration
 **LFG Enabled:** Yes  
@@ -57,8 +57,10 @@ Invite: No
 Whisper: yes "I'm looking to buy some silk!"  
 Invite: No  
 
-#### you can watch multiple channels for different things... like /2 and /4 for "LFG WTS"
----------
+###### you can watch multiple channels for different things... like /2 and /4 for "LFG WTS"
+###### but I reccomend keeping it simple at first 😅
+&nbsp;  
+&nbsp;  
 
 ### A Bit of an Explanation
 Lets say this is our criteria  
@@ -70,20 +72,17 @@ Lets say this is our criteria
 Think of each criteria level (1, 2, 3) as an "**AND**" and the criteria in the level as an "**OR**"  
 So the above criteria would alert when someone says (`lfm` or `lf1m`) AND (`dps` OR `heals`) AND (`uld` OR `scholo`)  
 But if they don't say something that matches a value from each criteria it is ignored  
-Matches: `"LF1M DPS ULD"`, `"LFM HEALS ULD"`, `"LFM DPS SCHOLO"`, etc..  
-Ignored: `"DPS LFG ULD"`, `"SCHOLO need 1 more DPS"`, `"LF TANK ULD"` etc..  
+Matches: "LF1M DPS ULD", "LFM HEALS ULD", "LFM DPS SCHOLO", etc..  
+Ignored: "DPS LFG ULD", "SCHOLO need 1 more DPS", "LF TANK ULD" etc..  
 
 ### Chosing the Right Criteria -- Troubleshooting
 If you think yoy may be missing some chat messages, keep an eye on chat to see whats being said  
 Did someone say `LF1M` and you were only matching on `LFM`?  
 Matches are case-insensitive, so no need to add `DPS` and `dps` etc...
 
-
-##
 #### I'd love to hear your feedback, please leave comments or open tickets for feature requests and issues  
-##
-  
-
+&nbsp;  
+&nbsp;  
 
 ## 🎉Version 1.2.1 has some **MAJOR** Updates!   👏👏 👏
 ### Dynamic Channels
