@@ -82,6 +82,24 @@ function table.ToString(t)
   return s
 end
 
+function table.Copy(src, dst)
+  if type(src) ~= "table" then return {} end
+	if type(dst) ~= "table" then dst = {} end
+	for k, v in pairs(src) do
+		if type(v) == "table" then
+			dst[k] = table.Copy(v, dst[k])
+		elseif type(v) ~= type(dst[k]) then
+			dst[k] = v
+		end
+	end
+	return dst
+end
+
+function table.RemoveLast(t)
+  print(table.remove (t, table.getn(t)))
+end
+
+
 
 function lfg.toggle()
   if LFGSettings.enabled then

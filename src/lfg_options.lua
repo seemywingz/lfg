@@ -43,9 +43,16 @@ function lfg.getChannels()
   
 end
 
+function lfg.createButton(parent, text, point, relFrame, relPoinit, onClick)
+  uniquealyzer = uniquealyzer + 1
+  local btn = CreateFrame("Button", "LFG_BTN_"..uniquealyzer, parent, "UIPanelButtonTemplate")
+  btn:SetText(text)
+  btn:SetPoint(point, relFrame, relPoinit)
+  btn:SetScript("OnClick", onClick) 
+  return btn
+end
 
 function lfg.loadOptions()
-  LFGSettings = lfg.defaults
 
   lfg.panel = CreateFrame("Frame");
   lfg.panel.name = addonName
@@ -76,9 +83,23 @@ function lfg.loadOptions()
       relFrame = cb
   end
 
-  -- Criteria Edit Boxes
+  -- Criteria 
   lfg.panel.critEB = {}
-  lfg.panel.critTitle = lfg.createTitle(lfg.panel, "Match Criteria: Leave Blank to Exclude", "TOPLEFT", relFrame, "BOTTOMLEFT")
+  lfg.panel.critTitle = lfg.createTitle(lfg.panel, "Match Criteria: Leave Blank to Exclude  ", "TOPLEFT", relFrame, "BOTTOMLEFT")
+ 
+  lfg.panel.critAddBTN = lfg.createButton(lfg.panel, "+", "LEFT", lfg.panel.critTitle, "RIGHT", function()
+    print("LFG: Adding Criteria")
+    table.insert(LFGSettings.criteria, {"New", "Criteria"})
+    lfg.removeInterfaceOptions(addonName, true)
+  end)
+  lfg.panel.critAddBTN:SetSize(20 ,22) -- width, height
+
+  lfg.panel.critRemoveBTN = lfg.createButton(lfg.panel, "-", "LEFT", lfg.panel.critAddBTN, "RIGHT", function()
+    print("LFG: Removing Criteria")
+    table.RemoveLast(LFGSettings.criteria)
+  end)
+  lfg.panel.critRemoveBTN:SetSize(20 ,22) -- width, height
+
   relFrame = lfg.panel.critTitle
   for i,crit in ipairs(LFGSettings.criteria) do
     local title = lfg.createTitle(lfg.panel, "  "..i..":  ", "TOPLEFT", relFrame, "BOTTOMLEFT")
@@ -101,14 +122,12 @@ function lfg.loadOptions()
   end)
   lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
 
-  lfg.saveBTN = CreateFrame("Button", "LFG_SAVE_BTN", lfg.panel, "UIPanelButtonTemplate")
-  lfg.saveBTN:SetSize(80 ,22) -- width, height
-  lfg.saveBTN:SetText("Save")
-  lfg.saveBTN:SetPoint("TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT")
-  lfg.saveBTN:SetScript("OnClick", function()
+  
+  lfg.panel.saveBTN = lfg.createButton(lfg.panel, "Save", "TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT", function()
     lfg.panel.okay()
     print("LFG Configs Saved!")
-  end) 
+  end)
+  lfg.panel.saveBTN:SetSize(80 ,22) -- width, height
 
   -- Panel Event Callbacks
   function lfg.panel.okay()
@@ -121,7 +140,7 @@ function lfg.loadOptions()
   end
 
   function lfg.panel.default()
-      LFGSettings = lfg.defaults
+      LFGSettings = table.Copy(LFGSettings, lfg.defaults)
   end
 
   function lfg.panel.refresh()
@@ -143,4 +162,47 @@ function lfg.loadOptions()
     
   end
   
+end
+
+
+function lfg.removeInterfaceOptions(frameName, bParent)
+  -- Ensure that the variables passed are valid
+  assert(type(frameName) == "string" and (type(bParent) == "boolean" or bParent == nil), 'Syntax: RemoveInterfaceOptions(frameName[, bParent])');
+  
+  -- Setup local variables
+  local removeList = {};
+  local nextFreeArraySpace = 1;
+  
+  -- If the name given is NOT a parent frame
+  if not(bParent) then
+      -- Add this frame to the list to be deleted
+      removeList[frameName] = true;
+  end
+  
+  -- Loop though Bliz's Interface Options Frames looking for the frames to remove
+  for i=1, #INTERFACEOPTIONS_ADDONCATEGORIES do
+      -- Store this Interface frame
+      local v = INTERFACEOPTIONS_ADDONCATEGORIES[i];
+      
+      -- Check if this is the frame we want to remove or if bParent
+      -- the child of the want we want to remove
+      -- or just one we want to keep
+      if (removeList[v.name] or (bParent and v.parent == frameName)) or (bParent and removeList[v.parent]) then
+          -- Wipe this frame from the array by making it 'true'
+          removeList[v.name] = true;
+      else
+          -- We want to keep this frame so move it up the array
+          -- to remove any holes caused by the deleted frames
+          INTERFACEOPTIONS_ADDONCATEGORIES[nextFreeArraySpace] = INTERFACEOPTIONS_ADDONCATEGORIES[i];
+          nextFreeArraySpace = nextFreeArraySpace + 1;
+      end;
+  end;
+  
+  -- Loop though all of the interface frames after the last good one removing them
+  for i=nextFreeArraySpace, #INTERFACEOPTIONS_ADDONCATEGORIES do
+      INTERFACEOPTIONS_ADDONCATEGORIES[i] = nil;
+  end;
+  
+  -- Tell Bliz's interface frame to update now to reflect the removed frames
+  InterfaceAddOnsList_Update();
 end
