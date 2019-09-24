@@ -119,16 +119,48 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
 
   if table.getn(matches) >= minCriteria then
     PlaySound(SOUNDKIT.READY_CHECK)
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    print("["..channelNumber.."] "..playerLink.." "..msg)
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    if LFGSettings.autoWhisper then
+    local id, chanName = GetChannelName(channelNumber);
+
+
+    local whisperCB = function()
       SendChatMessage(LFGSettings.whisperText, "WHISPER", nil, playerName)
     end
+    local inviteCB = function()
+      print("Inviting", playerName)
+      -- InviteUnit(playerName)
+    end
+    lfg.shoPopUp(playerLink.." "..msg, "Whisper", "Invite", "Ignore", whisperCB, inviteCB)
+
+    if LFGSettings.autoWhisper then
+      whisperCB()
+    end
+    
     if LFGSettings.autoInvite then
-      InviteUnit(playerName)
+      inviteCB()
     end
 
+    -- print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    -- print("["..channelNumber.."] "..playerLink.." "..msg)
+    -- print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
   end
   
+end
+
+function lfg.shoPopUp(text, btn1, btn2, btn3, accept, cancel, hide )
+  local popupName = addonName .. "POPUP_ALERT"
+  local timeout = 20
+  StaticPopupDialogs[popupName] = {
+    text = text,
+    button1 = btn1,
+    button2 = btn2,
+    button3 = btn3,
+    OnAccept = accept,
+    OnCancel = cancel,
+    OnHide = hide,
+    timeout = timeout,
+    whileDead = true,
+    hideOnEscape = true,
+    preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
+  }
+  StaticPopup_Show (popupName)
 end
