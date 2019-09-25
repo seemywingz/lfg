@@ -126,7 +126,7 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
     end
     local inviteCB = function()
       print("Inviting", playerName)
-      -- InviteUnit(playerName)
+      InviteUnit(playerName)
     end
     lfg.shoPopUp(playerLink.." "..msg, "Whisper", "Invite", "Ignore", whisperCB, inviteCB)
 
@@ -149,7 +149,6 @@ local uniquealyzer = 0;
 function lfg.shoPopUp(text, btn1, btn2, btn3, accept, cancel, hide )
   uniquealyzer = uniquealyzer + 1;
   local popupName = addonName .. "POPUP_ALERT_" .. uniquealyzer
-  local timeout = 30
   StaticPopupDialogs[popupName] = {
     text = text,
     button1 = btn1,
@@ -158,7 +157,7 @@ function lfg.shoPopUp(text, btn1, btn2, btn3, accept, cancel, hide )
     OnAccept = accept,
     OnCancel = cancel,
     OnHide = hide,
-    timeout = timeout,
+    timeout = 30,
     whileDead = true,
     hideOnEscape = true,
     preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
