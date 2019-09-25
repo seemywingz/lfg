@@ -97,14 +97,12 @@ function lfg.loadOptions()
   lfg.panel.critTitle = lfg.createTitle(lfg.panel, "Match Criteria: ", "TOPLEFT", relFrame, "BOTTOMLEFT")
  
   lfg.panel.critAddBTN = lfg.createButton(lfg.panel, "+", "LEFT", lfg.panel.critTitle, "RIGHT", function()
-    print("LFG: Adding Criteria")
     table.insert(LFGSettings.criteria, {"New", "Criteria"})
     lfg.refresh()
   end)
   lfg.panel.critAddBTN:SetSize(20 ,22) -- width, height
 
   lfg.panel.critRemoveBTN = lfg.createButton(lfg.panel, "-", "LEFT", lfg.panel.critAddBTN, "RIGHT", function()
-    print("LFG: Removing Criteria")
     table.RemoveLast(LFGSettings.criteria)
     lfg.refresh()
   end)

@@ -68,7 +68,7 @@ function table.ToString(t)
 end
 
 function table.RemoveLast(t)
-  print(table.remove (t, table.getn(t)))
+  table.remove (t, table.getn(t))
 end
 
 
