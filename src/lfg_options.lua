@@ -30,6 +30,15 @@ function lfg.createEditBox(parent, text, point, relFrame, relPoint)
   return eb
 end
 
+function lfg.createButton(parent, text, point, relFrame, relPoinit, onClick)
+  uniquealyzer = uniquealyzer + 1
+  local btn = CreateFrame("Button", "LFG_BTN_"..uniquealyzer, parent, "UIPanelButtonTemplate")
+  btn:SetText(text)
+  btn:SetPoint(point, relFrame, relPoinit)
+  btn:SetScript("OnClick", onClick) 
+  return btn
+end
+
 function lfg.getChannels()
 
   local channels = {}
@@ -41,15 +50,6 @@ function lfg.getChannels()
   end
   return channels
   
-end
-
-function lfg.createButton(parent, text, point, relFrame, relPoinit, onClick)
-  uniquealyzer = uniquealyzer + 1
-  local btn = CreateFrame("Button", "LFG_BTN_"..uniquealyzer, parent, "UIPanelButtonTemplate")
-  btn:SetText(text)
-  btn:SetPoint(point, relFrame, relPoinit)
-  btn:SetScript("OnClick", onClick) 
-  return btn
 end
 
 function lfg.refresh()
@@ -135,7 +135,12 @@ function lfg.loadOptions()
     lfg.panel.okay()
     print("LFG Configs Saved!")
   end)
-  lfg.panel.saveBTN:SetSize(80 ,22) -- width, height
+  lfg.panel.saveBTN:SetSize(80 ,22)
+
+  lfg.panel.refreshBTN = lfg.createButton(lfg.panel, "Refresh", "LEFT", lfg.panel.saveBTN, "RIGHT", function()
+    lfg.refresh()
+  end)
+  lfg.panel.refreshBTN:SetSize(80 ,22) -- width, height
 
   -- Panel Event Callbacks
   function lfg.panel.okay()
