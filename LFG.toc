@@ -3,7 +3,7 @@
 ## Title: LFG
 ## Notes: WoW Classic LFG Helper
 ## Author: SeeMyWings
-## Version: 1.2.6
+## Version: 1.2.7
 ## SavedVariablesPerCharacter: LFGSettings
 
 src\lfg.lua
