@@ -120,7 +120,6 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
     PlaySound(SOUNDKIT.READY_CHECK)
     local id, chanName = GetChannelName(channelNumber);
 
-
     local whisperCB = function()
       SendChatMessage(LFGSettings.whisperText, "WHISPER", nil, playerName)
     end
@@ -137,10 +136,7 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
     if LFGSettings.autoInvite then
       inviteCB()
     end
-
-    -- print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    -- print("["..channelNumber.."] "..playerLink.." "..msg)
-    -- print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    
   end
   
 end
