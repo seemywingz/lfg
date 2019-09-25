@@ -13,7 +13,7 @@ function events:PLAYER_LOGIN(...) -- Player is Logged In
   local release = "1.2.3"
   if LFGSettings.version ~=  release then
     -- Make sure to load Defaults when updating
-    print("LFG Updating Defaults from to Release "..release)
+    print("LFG Updating Defaults to Release: "..release)
     LFGSettings = lfg.defaults
   end
   lfg.loadOptions()
