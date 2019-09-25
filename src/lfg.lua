@@ -71,8 +71,6 @@ function table.RemoveLast(t)
   print(table.remove (t, table.getn(t)))
 end
 
-
-
 function lfg.toggle()
   if LFGSettings.enabled then
     print(addonName .. " Disabled")
@@ -82,7 +80,6 @@ function lfg.toggle()
     LFGSettings.enabled = true
   end
 end
-
 
 function lfg.handleChatEvent(...)
   if not LFGSettings.enabled  then return value  end
