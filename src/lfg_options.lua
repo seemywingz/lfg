@@ -78,6 +78,7 @@ function lfg.loadOptions()
     if LFGSettings.autoPost then
       lfg.panel.okay()
       print("LFG Auto Post Enabled!")
+      lfg.postInChannels()
       LFGSettings.autoPostTicker =  C_Timer.NewTicker(LFGSettings.autoPostDelay, function(args)
         lfg.postInChannels()
       end)
