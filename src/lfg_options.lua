@@ -158,7 +158,6 @@ function lfg.loadOptions()
   end)
   lfg.panel.autoPostCheckBox:SetChecked(LFGSettings.autoPost)
   lfg.panel.autoPostSlider = lfg.createSlider(lfg.panel, 10, 300, LFGSettings.autoPostDelay, 1, "Delay Seconds", "TOPLEFT", lfg.panel.autoPostTitle, "BOTTOMLEFT", function(self, value)
-    print("Sliding!")
     local newDelay = floor(value)
     LFGSettings.autoPostDelay = newDelay
     _G[self:GetName() .. 'Text']:SetText("Delay Seconds: " .. newDelay);
@@ -166,7 +165,6 @@ function lfg.loadOptions()
   )
   lfg.panel.autoPostSlider.tooltipText = "Posts Supplied Message in Selected Channels at given interval"
   lfg.panel.autoPostEditBox = lfg.createEditBox(lfg.panel, LFGSettings.autoPostText, "TOPLEFT", lfg.panel.autoPostSlider, "BOTTOMLEFT")
-  -- lfg.panel.autoPostEditBox:SetPoint("LEFT", lfg.panel.whisperCB, "RIGHT", 80, 0)
 
   -- Buttons
   lfg.panel.saveBTN = lfg.createButton(lfg.panel, "Save", "TOPLEFT", lfg.panel.autoPostEditBox, "BOTTOMLEFT", function()
