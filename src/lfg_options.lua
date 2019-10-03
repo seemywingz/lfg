@@ -1,78 +1,5 @@
 local addonName, lfg = ...
 
-local uniquealyzer = 1;
-function lfg.createTitle(parent, text, point, relFrame, relPoinit)
-  uniquealyzer = uniquealyzer + 1;
-  local fs = parent:CreateFontString("LFG_PANEL_TITLE"..uniquealyzer, "ARTWORK", "GameFontNormalLarge")
-  fs:SetPoint(point, relFrame, relPoinit, 0, -10)
-  fs:SetText(text)
-  return fs
-end
-
-function lfg.createCheckBox(parent, text, point, relFrame, relPoinit, onClick)
-  uniquealyzer = uniquealyzer + 1;
-  local globalName = "FL_CHECKBOX_"..uniquealyzer
-  local cb = CreateFrame("CheckButton", globalName, parent, "ChatConfigCheckButtonTemplate") --frameType, frameName, frameParent, frameTemplate    
-  _G[globalName.."Text"]:SetText(text)
-  cb:SetPoint(point, relFrame, relPoinit)
-  cb:SetScript("OnClick", onClick)
-  return cb
-end
-
-function lfg.createEditBox(parent, text, point, relFrame, relPoint)
-  uniquealyzer = uniquealyzer + 1
-  local eb = CreateFrame("EditBox", "LFG_EDITBOX_"..uniquealyzer, parent, "InputBoxTemplate")
-  eb:SetSize(200, 40)
-  eb:SetPoint(point, relFrame, relPoint)
-  eb:SetAutoFocus(false)
-  eb:SetText(text)
-  eb:SetCursorPosition(0)
-  return eb
-end
-
-function lfg.createButton(parent, text, point, relFrame, relPoinit, onClick)
-  uniquealyzer = uniquealyzer + 1
-  local btn = CreateFrame("Button", "LFG_BTN_"..uniquealyzer, parent, "UIPanelButtonTemplate")
-  btn:SetText(text)
-  btn:SetPoint(point, relFrame, relPoinit)
-  btn:SetScript("OnClick", onClick) 
-  return btn
-end
-
-function lfg.createSlider(parent, sliderMin, sliderMax, value, valueStep, text, point, relFrame, relPoinit, callBack)
-  uniquealyzer = uniquealyzer + 1
-  local slider = CreateFrame("Slider", "LFG_SLIDER" .. uniquealyzer, parent, "OptionsSliderTemplate")
-  slider:SetEnabled(true)
-  slider:Show()
-  slider:SetWidth(200)
-  slider:SetHeight(30)
-  slider:SetPoint(point, relFrame, relPoinit, 0 , -20)
-  slider:SetOrientation('HORIZONTAL')
-  slider:SetValue(value)
-  slider:SetValueStep(valueStep)
-  slider:SetMinMaxValues(sliderMin,sliderMax);
-  -- slider.tooltipText = toolTip --Creates a tooltip on mouseover.
-  getglobal(slider:GetName() .. 'Low'):SetText(sliderMin); --Sets the left-side slider text (default is "Low").
-  getglobal(slider:GetName() .. 'High'):SetText(sliderMax); --Sets the right-side slider text (default is "High").
-  getglobal(slider:GetName() .. 'Text'):SetText(text .. ": " .. value); --Sets the "title" text (top-centre of slider).
-  slider:SetScript("OnValueChanged", callBack)
-  return slider
-end
-
-
-function lfg.getChannels()
-
-  local channels = {}
-  for i = 1, LFGSettings.maxChannels do
-    local id, chanName = GetChannelName(i);
-    if (id > 0 and chanName ~= nil) then
-      channels[id] = chanName
-    end
-  end
-  return channels
-  
-end
-
 function lfg.refresh()
   lfg.removeInterfaceOptions(addonName, false)
   InterfaceOptionsFrame_Show() 
@@ -80,7 +7,6 @@ function lfg.refresh()
   InterfaceOptionsFrame_OpenToCategory(addonName);
   InterfaceOptionsFrame_OpenToCategory(addonName);
 end
-
 
 function lfg.loadOptions()
 

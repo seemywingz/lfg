@@ -8,7 +8,6 @@ lfg.defaults = {
   autoWhisper = false,
   linkColor = "cffff00ff",
   whisperText = "I'm Down!",
-  maxChannels = 10,
   channel = {},
   autoPost = false,
   autoPostDelay = 30,
@@ -26,53 +25,6 @@ lfg.defaults = {
 
 }
 LFGSettings = LFGSettings or lfg.defaults
-
--- String Helpers
-function string:Split(sep)
-  if sep == nil then
-    sep = "%s"
-  end
-  local t={}
-  for str in string.gmatch(self, "([^"..sep.."]+)") do
-      table.insert(t, str)
-  end
-  return t
-end
-
-function string:FindI(pattern)
-  -- find an optional '%' (group 1) followed by any character (group 2)
-  local p = pattern:gsub("(%%?)(.)", function(percent, letter)
-    if percent ~= "" or not letter:match("%a") then
-      -- if the '%' matched, or `letter` is not a letter, return "as is"
-      return percent .. letter
-    else
-      -- else, return a case-insensitive character class of the matched letter
-      return string.format("[%s%s]", letter:lower(), letter:upper())
-    end
-  end)
-  return self:find(p)
-end
-
-function string:ToTable()
-  local t = {}
-  for word in self:gmatch("%w+") do 
-    table.insert(t, word) 
-  end
-  return t or {}
-end
-
--- Table Helpers
-function table.ToString(t)
-  local s = " "
-  for k,v in pairs(t) do
-    s = s .." ".. v
-  end
-  return s
-end
-
-function table.RemoveLast(t)
-  table.remove (t, table.getn(t))
-end
 
 function lfg.toggle()
   if LFGSettings.enabled then

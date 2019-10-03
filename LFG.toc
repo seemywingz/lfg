@@ -6,6 +6,7 @@
 ## Version: 1.2.8
 ## SavedVariablesPerCharacter: LFGSettings
 
+src\common.lua
 src\lfg.lua
 src\lfg_options.lua
 src\lfg_cmd.lua
