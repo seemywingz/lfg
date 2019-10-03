@@ -39,6 +39,27 @@ function lfg.createButton(parent, text, point, relFrame, relPoinit, onClick)
   return btn
 end
 
+function lfg.createSlider(parent, sliderMin, sliderMax, value, valueStep, text, point, relFrame, relPoinit, callBack)
+  uniquealyzer = uniquealyzer + 1
+  local slider = CreateFrame("Slider", "LFG_SLIDER" .. uniquealyzer, parent, "OptionsSliderTemplate")
+  slider:SetEnabled(true)
+  slider:Show()
+  slider:SetWidth(200)
+  slider:SetHeight(30)
+  slider:SetPoint(point, relFrame, relPoinit, 0 , -20)
+  slider:SetOrientation('HORIZONTAL')
+  slider:SetValue(value)
+  slider:SetValueStep(valueStep)
+  slider:SetMinMaxValues(sliderMin,sliderMax);
+  -- slider.tooltipText = toolTip --Creates a tooltip on mouseover.
+  getglobal(slider:GetName() .. 'Low'):SetText(sliderMin); --Sets the left-side slider text (default is "Low").
+  getglobal(slider:GetName() .. 'High'):SetText(sliderMax); --Sets the right-side slider text (default is "High").
+  getglobal(slider:GetName() .. 'Text'):SetText(text .. ": " .. value); --Sets the "title" text (top-centre of slider).
+  slider:SetScript("OnValueChanged", callBack)
+  return slider
+end
+
+
 function lfg.getChannels()
 
   local channels = {}
@@ -117,8 +138,8 @@ function lfg.loadOptions()
   end
 
   -- Auto Whisper Check Box
-  lfg.panel.autoTitle = lfg.createTitle(lfg.panel, "Auto Response:", "TOPLEFT", relFrame, "BOTTOMLEFT")
-  lfg.panel.whisperCB = lfg.createCheckBox(lfg.panel, "Whisper:", "TOPLEFT", lfg.panel.autoTitle, "BOTTOMLEFT", function(self)
+  lfg.panel.autoRespTitle = lfg.createTitle(lfg.panel, "Auto Response:", "TOPLEFT", relFrame, "BOTTOMLEFT")
+  lfg.panel.whisperCB = lfg.createCheckBox(lfg.panel, "Whisper:", "TOPLEFT", lfg.panel.autoRespTitle, "BOTTOMLEFT", function(self)
     LFGSettings.autoWhisper = self:GetChecked()
   end)
   lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
@@ -130,8 +151,25 @@ function lfg.loadOptions()
   end)
   lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
 
-  
-  lfg.panel.saveBTN = lfg.createButton(lfg.panel, "Save", "TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT", function()
+  -- Auto Post
+  lfg.panel.autoPostTitle = lfg.createTitle(lfg.panel, "Auto Post:", "TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT")
+  lfg.panel.autoPostCheckBox = lfg.createCheckBox(lfg.panel, "", "LEFT", lfg.panel.autoPostTitle, "RIGHT", function(self)
+    LFGSettings.autoPost = self:GetChecked()
+  end)
+  lfg.panel.autoPostCheckBox:SetChecked(LFGSettings.autoPost)
+  lfg.panel.autoPostSlider = lfg.createSlider(lfg.panel, 10, 300, LFGSettings.autoPostDelay, 1, "Delay Seconds", "TOPLEFT", lfg.panel.autoPostTitle, "BOTTOMLEFT", function(self, value)
+    print("Sliding!")
+    local newDelay = floor(value)
+    LFGSettings.autoPostDelay = newDelay
+    _G[self:GetName() .. 'Text']:SetText("Delay Seconds: " .. newDelay);
+  end
+  )
+  lfg.panel.autoPostSlider.tooltipText = "Posts Supplied Message in Selected Channels at given interval"
+  lfg.panel.autoPostEditBox = lfg.createEditBox(lfg.panel, LFGSettings.autoPostText, "TOPLEFT", lfg.panel.autoPostSlider, "BOTTOMLEFT")
+  -- lfg.panel.autoPostEditBox:SetPoint("LEFT", lfg.panel.whisperCB, "RIGHT", 80, 0)
+
+  -- Buttons
+  lfg.panel.saveBTN = lfg.createButton(lfg.panel, "Save", "TOPLEFT", lfg.panel.autoPostEditBox, "BOTTOMLEFT", function()
     lfg.panel.okay()
     print("LFG Configs Saved!")
   end)

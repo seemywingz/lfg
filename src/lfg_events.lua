@@ -11,7 +11,7 @@ end
 function events:PLAYER_LOGIN(...) -- Player is Logged In
   print("LFG Loaded: /lfg help")
   local current = GetAddOnMetadata(addonName, "Version")
-  if LFGSettings.version ~= current then
+  if LFGSettings.version ~= 1 then
     -- Make sure to load Defaults when updating
     print("LFG Updating Defaults to Release: "..current)
     LFGSettings = lfg.defaults

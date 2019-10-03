@@ -10,6 +10,9 @@ lfg.defaults = {
   whisperText = "I'm Down!",
   maxChannels = 10,
   channel = {},
+  autoPost = false,
+  autoPostDelay = 30,
+  autoPostText = "LFG",
 
 
   criteria = {
