@@ -12,6 +12,7 @@ function lfg.loadOptions()
   
   -- Enabled Check Box
   lfg.panel.enabledCB = lfg.createCheckBox(lfg.panel, "Enabled", "TOPLEFT", lfg.panel.title, "BOTTOMLEFT", function(self)
+    lfg.panel.okay()
     LFGSettings.enabled = self:GetChecked()
   end)
   lfg.panel.enabledCB:SetChecked(LFGSettings.enabled)
@@ -32,7 +33,7 @@ function lfg.loadOptions()
   end
 
   -- Criteria 
-  lfg.panel.critEB = {}
+  lfg.panel.critEditBox = {}
   lfg.panel.critTitle = lfg.createTitle(lfg.panel, "Match Criteria: ", "TOPLEFT", relFrame, "BOTTOMLEFT")
  
   lfg.panel.critAddBTN = lfg.createButton(lfg.panel, "+", "LEFT", lfg.panel.critTitle, "RIGHT", function()
@@ -51,13 +52,14 @@ function lfg.loadOptions()
   for i,crit in ipairs(LFGSettings.criteria) do
     local title = lfg.createTitle(lfg.panel, "  "..i..":  ", "TOPLEFT", relFrame, "BOTTOMLEFT")
     local eb = lfg.createEditBox(lfg.panel, table.ToString(LFGSettings.criteria[i]), "LEFT", title, "RIGHT")
-    table.insert(lfg.panel.critEB, eb)
+    table.insert(lfg.panel.critEditBox, eb)
     relFrame = title
   end
 
   -- Auto Whisper Check Box
   lfg.panel.autoRespTitle = lfg.createTitle(lfg.panel, "Auto Response:", "TOPLEFT", relFrame, "BOTTOMLEFT")
   lfg.panel.whisperCB = lfg.createCheckBox(lfg.panel, "Whisper:", "TOPLEFT", lfg.panel.autoRespTitle, "BOTTOMLEFT", function(self)
+    lfg.panel.okay()
     LFGSettings.autoWhisper = self:GetChecked()
   end)
   lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
@@ -74,16 +76,19 @@ function lfg.loadOptions()
   lfg.panel.autoPostCheckBox = lfg.createCheckBox(lfg.panel, "", "LEFT", lfg.panel.autoPostTitle, "RIGHT", function(self)
     LFGSettings.autoPost = self:GetChecked()
     if LFGSettings.autoPost then
+      lfg.panel.okay()
+      print("LFG Auto Post Enabled!")
       LFGSettings.autoPostTicker =  C_Timer.NewTicker(LFGSettings.autoPostDelay, function(args)
         print("Auto Post Ticker")
+        lfg.postInChannels()
       end)
     else
-      print("CANCELING Auto Post Ticker")
-      -- LFGSettings.autoPostTicker:Cancel()
+      print("LFG Auto Post Canceled!")
+      LFGSettings.autoPostTicker._cancelled = true
     end
   end)
   lfg.panel.autoPostCheckBox:SetChecked(LFGSettings.autoPost)
-  lfg.panel.autoPostSlider = lfg.createSlider(lfg.panel, 10, 300, LFGSettings.autoPostDelay, 1, "Delay Seconds", "TOPLEFT", lfg.panel.autoPostTitle, "BOTTOMLEFT", function(self, value)
+  lfg.panel.autoPostSlider = lfg.createSlider(lfg.panel, 1, 300, LFGSettings.autoPostDelay, 1, "Delay Seconds", "TOPLEFT", lfg.panel.autoPostTitle, "BOTTOMLEFT", function(self, value)
     local newDelay = floor(value)
     LFGSettings.autoPostDelay = newDelay
     _G[self:GetName() .. 'Text']:SetText("Delay Seconds: " .. newDelay);
@@ -107,10 +112,11 @@ function lfg.loadOptions()
   -- Panel Event Callbacks
   function lfg.panel.okay()
 
-      for i,eb in ipairs(lfg.panel.critEB) do
+      for i,eb in ipairs(lfg.panel.critEditBox) do
         LFGSettings.criteria[i] = eb:GetText():ToTable()
       end
       LFGSettings.whisperText = lfg.panel.whisperEditBox:GetText()
+      LFGSettings.autoPostText = lfg.panel.autoPostEditBox:GetText()
 
   end
 
@@ -127,7 +133,7 @@ function lfg.loadOptions()
         cb:SetChecked(LFGSettings.channel[i])
       end
 
-      for i,eb in ipairs(lfg.panel.critEB) do
+      for i,eb in ipairs(lfg.panel.critEditBox) do
         eb:SetText(table.ToString(LFGSettings.criteria[i]))
       end
   
@@ -137,47 +143,4 @@ function lfg.loadOptions()
     
   end
   
-end
-
-
-function lfg.removeInterfaceOptions(frameName, bParent)
-  -- Ensure that the variables passed are valid
-  assert(type(frameName) == "string" and (type(bParent) == "boolean" or bParent == nil), 'Syntax: RemoveInterfaceOptions(frameName[, bParent])');
-  
-  -- Setup local variables
-  local removeList = {};
-  local nextFreeArraySpace = 1;
-  
-  -- If the name given is NOT a parent frame
-  if not(bParent) then
-      -- Add this frame to the list to be deleted
-      removeList[frameName] = true;
-  end
-  
-  -- Loop though Bliz's Interface Options Frames looking for the frames to remove
-  for i=1, #INTERFACEOPTIONS_ADDONCATEGORIES do
-      -- Store this Interface frame
-      local v = INTERFACEOPTIONS_ADDONCATEGORIES[i];
-      
-      -- Check if this is the frame we want to remove or if bParent
-      -- the child of the want we want to remove
-      -- or just one we want to keep
-      if (removeList[v.name] or (bParent and v.parent == frameName)) or (bParent and removeList[v.parent]) then
-          -- Wipe this frame from the array by making it 'true'
-          removeList[v.name] = true;
-      else
-          -- We want to keep this frame so move it up the array
-          -- to remove any holes caused by the deleted frames
-          INTERFACEOPTIONS_ADDONCATEGORIES[nextFreeArraySpace] = INTERFACEOPTIONS_ADDONCATEGORIES[i];
-          nextFreeArraySpace = nextFreeArraySpace + 1;
-      end;
-  end;
-  
-  -- Loop though all of the interface frames after the last good one removing them
-  for i=nextFreeArraySpace, #INTERFACEOPTIONS_ADDONCATEGORIES do
-      INTERFACEOPTIONS_ADDONCATEGORIES[i] = nil;
-  end;
-  
-  -- Tell Bliz's interface frame to update now to reflect the removed frames
-  InterfaceAddOnsList_Update();
 end

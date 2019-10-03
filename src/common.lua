@@ -172,6 +172,25 @@ function ns.refreshInterfaceOptions(callBack)
   InterfaceOptionsFrame_OpenToCategory(addonName);
 end
 
+function ns.shoPopUp(text, btn1, btn2, btn3, acceptCB, cancelCB, hideCB )
+  uniquealyzer = uniquealyzer + 1;
+  local popupName = addonName .. "_POPUP_ALERT_" .. uniquealyzer
+  StaticPopupDialogs[popupName] = {
+    text = text,
+    button1 = btn1,
+    button2 = btn2,
+    button3 = btn3,
+    OnAccept = acceptCB,
+    OnCancel = cancelCB,
+    OnHide = hideCB,
+    timeout = 10,
+    whileDead = true,
+    hideOnEscape = true,
+    preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
+  }
+  StaticPopup_Show (popupName)
+end
+
 -- https://wow.gamepedia.com/API_C_Timer.NewTicker
 -- local ticker = C_Timer.NewTicker(duration, callback[, iterations])
 

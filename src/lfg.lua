@@ -12,9 +12,7 @@ lfg.defaults = {
   autoPost = false,
   autoPostDelay = 30,
   autoPostText = "LFG",
-  autoPostTicker = C_Timer.NewTicker(999, function(args)
-    print("Auto Post Ticker")
-  end, 0),
+  autoPostTicker = {},
 
 
   criteria = {
@@ -36,6 +34,14 @@ function lfg.toggle()
   else
     print(addonName .. " Enabled")
     LFGSettings.enabled = true
+  end
+end
+
+function lfg.postInChannels()
+  for channel,listening in pairs(LFGSettings.channel) do
+    if listening then
+      SendChatMessage(LFGSettings.autoPostText, "CHANNEL", nil, channel)
+    end
   end
 end
 
@@ -78,9 +84,11 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
     local whisperCB = function()
       SendChatMessage(LFGSettings.whisperText, "WHISPER", nil, playerName)
     end
-    local inviteCB = function()
-      print("Inviting", playerName)
-      InviteUnit(playerName)
+    local inviteCB = function(_, reason)
+      if reason == "clicked" then
+        print("Inviting", playerName)
+        InviteUnit(playerName)
+      end
     end
     lfg.shoPopUp(playerLink.." "..msg, "Whisper", "Invite", "Ignore", whisperCB, inviteCB)
 
@@ -96,22 +104,3 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
   
 end
 
-local uniquealyzer = 0;
-function lfg.shoPopUp(text, btn1, btn2, btn3, accept, cancel, hide )
-  uniquealyzer = uniquealyzer + 1;
-  local popupName = addonName .. "POPUP_ALERT_" .. uniquealyzer
-  StaticPopupDialogs[popupName] = {
-    text = text,
-    button1 = btn1,
-    button2 = btn2,
-    button3 = btn3,
-    OnAccept = accept,
-    OnCancel = cancel,
-    OnHide = hide,
-    timeout = 30,
-    whileDead = true,
-    hideOnEscape = true,
-    preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
-  }
-  StaticPopup_Show (popupName)
-end
