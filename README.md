@@ -85,6 +85,14 @@ If some Options UI elements aren't showing up after an update, click the `Defaul
 &nbsp;  
 &nbsp;  
 
+
+## 🎉Version 1.3.0 Updates!  
+### Ignore Message Sent By You 😅
+* **LFG** will now ignore messages sent by you
+### Auto Post Messages  
+* **LFG** will post your messages in the selcted channels at the chosen interval when `Auto Post:` checkbox is enabled
+* Configure the Custom Message in the Auto Post text box
+
 ## 🎉Version 1.2.3 has some **MAJOR** Updates!   👏👏 👏
 ### Dynamic Channels
 * Channels are now Dynamically generated from your current list of chanels
