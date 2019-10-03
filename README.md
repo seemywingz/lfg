@@ -92,6 +92,7 @@ If some Options UI elements aren't showing up after an update, click the `Defaul
 ### Auto Post Messages  
 * **LFG** will post your messages in the selcted channels at the chosen interval when `Auto Post:` checkbox is enabled
 * Configure the Custom Message in the Auto Post text box
+* Set the timeout delay by dragging the `Delay Seconds` slider
 
 ## 🎉Version 1.2.3 has some **MAJOR** Updates!   👏👏 👏
 ### Dynamic Channels
