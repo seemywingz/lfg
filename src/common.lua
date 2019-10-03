@@ -172,6 +172,9 @@ function ns.refreshInterfaceOptions(callBack)
   InterfaceOptionsFrame_OpenToCategory(addonName);
 end
 
+-- https://wow.gamepedia.com/API_C_Timer.NewTicker
+-- local ticker = C_Timer.NewTicker(duration, callback[, iterations])
+
 -- Example Login Event
 -- function events:PLAYER_LOGIN(...) -- Player is Logged In
 --   print("LFG Loaded: /lfg help")

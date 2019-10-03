@@ -12,6 +12,9 @@ lfg.defaults = {
   autoPost = false,
   autoPostDelay = 30,
   autoPostText = "LFG",
+  autoPostTicker = C_Timer.NewTicker(999, function(args)
+    print("Auto Post Ticker")
+  end, 0),
 
 
   criteria = {

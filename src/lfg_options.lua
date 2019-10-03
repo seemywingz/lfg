@@ -1,13 +1,5 @@
 local addonName, lfg = ...
 
-function lfg.refresh()
-  lfg.removeInterfaceOptions(addonName, false)
-  InterfaceOptionsFrame_Show() 
-  lfg.loadOptions()
-  InterfaceOptionsFrame_OpenToCategory(addonName);
-  InterfaceOptionsFrame_OpenToCategory(addonName);
-end
-
 function lfg.loadOptions()
 
   lfg.panel = CreateFrame("Frame");
@@ -45,13 +37,13 @@ function lfg.loadOptions()
  
   lfg.panel.critAddBTN = lfg.createButton(lfg.panel, "+", "LEFT", lfg.panel.critTitle, "RIGHT", function()
     table.insert(LFGSettings.criteria, {"New", "Criteria"})
-    lfg.refresh()
+    lfg.refreshInterfaceOptions(lfg.loadOptions)
   end)
   lfg.panel.critAddBTN:SetSize(20 ,22) -- width, height
 
   lfg.panel.critRemoveBTN = lfg.createButton(lfg.panel, "-", "LEFT", lfg.panel.critAddBTN, "RIGHT", function()
     table.RemoveLast(LFGSettings.criteria)
-    lfg.refresh()
+    lfg.refreshInterfaceOptions(lfg.loadOptions)
   end)
   lfg.panel.critRemoveBTN:SetSize(20 ,22) -- width, height
 
@@ -81,6 +73,14 @@ function lfg.loadOptions()
   lfg.panel.autoPostTitle = lfg.createTitle(lfg.panel, "Auto Post:", "TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT")
   lfg.panel.autoPostCheckBox = lfg.createCheckBox(lfg.panel, "", "LEFT", lfg.panel.autoPostTitle, "RIGHT", function(self)
     LFGSettings.autoPost = self:GetChecked()
+    if LFGSettings.autoPost then
+      LFGSettings.autoPostTicker =  C_Timer.NewTicker(LFGSettings.autoPostDelay, function(args)
+        print("Auto Post Ticker")
+      end)
+    else
+      print("CANCELING Auto Post Ticker")
+      -- LFGSettings.autoPostTicker:Cancel()
+    end
   end)
   lfg.panel.autoPostCheckBox:SetChecked(LFGSettings.autoPost)
   lfg.panel.autoPostSlider = lfg.createSlider(lfg.panel, 10, 300, LFGSettings.autoPostDelay, 1, "Delay Seconds", "TOPLEFT", lfg.panel.autoPostTitle, "BOTTOMLEFT", function(self, value)
@@ -100,7 +100,7 @@ function lfg.loadOptions()
   lfg.panel.saveBTN:SetSize(80 ,22)
 
   lfg.panel.refreshBTN = lfg.createButton(lfg.panel, "Refresh", "LEFT", lfg.panel.saveBTN, "RIGHT", function()
-    lfg.refresh()
+    lfg.refreshInterfaceOptions(lfg.loadOptions)
   end)
   lfg.panel.refreshBTN:SetSize(80 ,22) -- width, height
 
@@ -116,7 +116,7 @@ function lfg.loadOptions()
 
   function lfg.panel.default()
       LFGSettings = lfg.defaults
-      lfg.refresh()
+      lfg.refreshInterfaceOptions(lfg.loadOptions)
   end
 
   function lfg.panel.refresh()
