@@ -49,22 +49,24 @@ function lfg.handleChatEvent(...)
   if not LFGSettings.enabled  then return value  end
   local msg, fromPlayer, _, eventChannel = ...
 
+  -- chat event returns "playername-servername", so we split on `-` and take the first value
+  local playerName = fromPlayer:Split("-")[1] 
+  -- if playerName == UnitName("player") then return end
+
   for channelNumber, listening in pairs(LFGSettings.channel) do
     if eventChannel:find(channelNumber) and listening then
-      lfg.parseMSG(msg, fromPlayer, channelNumber)
+      lfg.parseMSG(msg, playerName, channelNumber)
     end
   end
 
 end
 
 -- Parse the message to see if it meets our search criteria
-function lfg.parseMSG(msg, fromPlayer, channelNumber)
+function lfg.parseMSG(msg, playerName, channelNumber)
  
   local matches = {}
   local minCriteria = 0
 
-  -- chat event returns "playername-servername", so we split on `-` and take the first value
-  local playerName = fromPlayer:Split("-")[1] 
   local playerLink = "|"..LFGSettings.linkColor.."|Hplayer:"..playerName.."|h["..playerName.."]|h|r";
   
   for _,searchCrit in pairs(LFGSettings.criteria) do
@@ -84,20 +86,20 @@ function lfg.parseMSG(msg, fromPlayer, channelNumber)
     local whisperCB = function()
       SendChatMessage(LFGSettings.whisperText, "WHISPER", nil, playerName)
     end
-    local inviteCB = function(_, reason)
+    local inviteCB = function(_, _, reason)
       if reason == "clicked" then
         print("Inviting", playerName)
         InviteUnit(playerName)
       end
     end
-    lfg.shoPopUp(playerLink.." "..msg, "Whisper", "Invite", "Ignore", whisperCB, inviteCB)
+    lfg.shoPopUp(playerLink.." "..msg, 30, "Whisper", "Invite", "Ignore", whisperCB, inviteCB)
 
     if LFGSettings.autoWhisper then
       whisperCB()
     end
     
     if LFGSettings.autoInvite then
-      inviteCB()
+      inviteCB(nil,nil,"clicked" )
     end
     
   end

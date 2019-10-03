@@ -172,7 +172,7 @@ function ns.refreshInterfaceOptions(callBack)
   InterfaceOptionsFrame_OpenToCategory(addonName);
 end
 
-function ns.shoPopUp(text, btn1, btn2, btn3, acceptCB, cancelCB, hideCB )
+function ns.shoPopUp(text, timeout, btn1, btn2, btn3, acceptCB, cancelCB, altCB, hideOnEscape)
   uniquealyzer = uniquealyzer + 1;
   local popupName = addonName .. "_POPUP_ALERT_" .. uniquealyzer
   StaticPopupDialogs[popupName] = {
@@ -182,10 +182,10 @@ function ns.shoPopUp(text, btn1, btn2, btn3, acceptCB, cancelCB, hideCB )
     button3 = btn3,
     OnAccept = acceptCB,
     OnCancel = cancelCB,
-    OnHide = hideCB,
-    timeout = 10,
+    OnAlt = altCB,
+    timeout = timeout,
     whileDead = true,
-    hideOnEscape = true,
+    hideOnEscape = hideOnEscape,
     preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
   }
   StaticPopup_Show (popupName)
