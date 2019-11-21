@@ -1,17 +1,6 @@
 local addonName, ns = ...
 
 -- String Helpers
-function string:Split(sep)
-  if sep == nil then
-    sep = "%s"
-  end
-  local t={}
-  for str in string.gmatch(self, "([^"..sep.."]+)") do
-      table.insert(t, str)
-  end
-  return t
-end
-
 function string:FindI(pattern)
   -- find an optional '%' (group 1) followed by any character (group 2)
   local p = pattern:gsub("(%%?)(.)", function(percent, letter)
