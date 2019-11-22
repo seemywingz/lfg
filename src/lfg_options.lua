@@ -43,7 +43,7 @@ function lfg.loadOptions()
   lfg.panel.critAddBTN:SetSize(20 ,22) -- width, height
 
   lfg.panel.critRemoveBTN = lfg.createButton(lfg.panel, "-", "LEFT", lfg.panel.critAddBTN, "RIGHT", function()
-    table.RemoveLast(LFGSettings.criteria)
+    table.remove(LFGSettings.criteria)
     lfg.refreshInterfaceOptions(lfg.loadOptions)
   end)
   lfg.panel.critRemoveBTN:SetSize(20 ,22) -- width, height

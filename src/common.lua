@@ -32,10 +32,6 @@ function table.ToString(t)
   return s
 end
 
-function table.RemoveLast(t)
-  table.remove (t, table.getn(t))
-end
-
 -- Interface Addon UI Components
 local uniquealyzer = 1;
 function ns.createTitle(parent, text, point, relFrame, relPoinit)
