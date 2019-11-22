@@ -23,13 +23,8 @@ function string:ToTable()
   return t or {}
 end
 
--- Table Helpers
-function table.ToString(t)
-  local s = " "
-  for k,v in pairs(t) do
-    s = s .." ".. v
-  end
-  return s
+function ns.combineCriteria(t)
+  return strjoin(" ", unpack(t))
 end
 
 -- Interface Addon UI Components

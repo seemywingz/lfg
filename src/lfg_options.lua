@@ -51,7 +51,7 @@ function lfg.loadOptions()
   relFrame = lfg.panel.critTitle
   for i,crit in ipairs(LFGSettings.criteria) do
     local title = lfg.createTitle(lfg.panel, "  "..i..":  ", "TOPLEFT", relFrame, "BOTTOMLEFT")
-    local eb = lfg.createEditBox(lfg.panel, table.ToString(LFGSettings.criteria[i]), "LEFT", title, "RIGHT")
+    local eb = lfg.createEditBox(lfg.panel, lfg.combineCriteria(LFGSettings.criteria[i]), "LEFT", title, "RIGHT")
     table.insert(lfg.panel.critEditBox, eb)
     relFrame = title
   end
@@ -134,7 +134,7 @@ function lfg.loadOptions()
       end
 
       for i,eb in ipairs(lfg.panel.critEditBox) do
-        eb:SetText(table.ToString(LFGSettings.criteria[i]))
+        eb:SetText(lfg.combineCriteria(LFGSettings.criteria[i]))
       end
   
       lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
