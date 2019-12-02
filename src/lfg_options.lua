@@ -10,7 +10,7 @@ function lfg.registerMiniMap()
 
     local databroker = LDB:NewDataObject ("LFG", {
       type = "data source",
-      icon = "Interface\\AddOns\\LFG\\img\\melee",
+      icon = "Interface\\AddOns\\LFG\\img\\lfg_bg",
       text = "0",
       
       HotCornerIgnore = true,
