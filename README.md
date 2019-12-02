@@ -85,8 +85,8 @@ If some Options UI elements aren't showing up after an update, click the `Defaul
 &nbsp;  
 &nbsp;  
 
-## 🎉Version 1.4.0 Updates! 
-### Add Ignore List 🚫
+## 🎉Version 1.4.1 Updates! 
+### Add Ignore List 🚫👂
 * **LFG** Will now Ignore Messages from Players in your "Ignore List"
 * To add a player to your Ignore List, just click the "Ignore" button on an **LFG** popup
 * Players are NOT automatically ignored if the notification times out
