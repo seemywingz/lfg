@@ -1,5 +1,51 @@
 local addonName, lfg = ...
 
+function lfg.registerMiniMap()
+  
+  local LDB = LibStub ("LibDataBroker-1.1", true)
+  local LDBIcon = LDB and LibStub ("LibDBIcon-1.0", true)
+  
+  if LDB then
+    print("YESSSS LDB LOADED")
+
+    local databroker = LDB:NewDataObject ("LFG", {
+      type = "data source",
+      icon = "Interface\\AddOns\\LFG\\img\\melee",
+      text = "0",
+      
+      HotCornerIgnore = true,
+      
+      OnClick = function (self, button)
+      
+        if (button == "LeftButton") then
+          -- Note: Call this function twice (in a row), 
+          -- there is a bug in Blizzard's code which makes the first call (after login or /reload) fail. 
+          -- It opens interface options, but not on the addon's interface options, just the default interface options. 
+          InterfaceOptionsFrame_OpenToCategory(addonName);
+          InterfaceOptionsFrame_OpenToCategory(addonName);  
+
+        elseif (button == "RightButton") then
+          lfg.toggle()
+        end
+
+      end,
+
+      OnTooltipShow = function (tooltip)
+        tooltip:AddLine ("LFG v" .. LFGSettings.version)
+        tooltip:AddLine ("Left CLick: Configure")
+        tooltip:AddLine ("Right CLick: Enable/Disable")
+      end,
+    })
+    
+    if (databroker and not LDBIcon:IsRegistered ("LFG")) then
+      LDBIcon:Register ("LFG", databroker, LFGSettings.minimap)
+    end
+
+  end
+
+end
+
+
 function lfg.loadOptions()
 
   lfg.panel = CreateFrame("Frame");

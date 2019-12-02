@@ -17,6 +17,7 @@ function events:PLAYER_LOGIN(...) -- Player is Logged In
     LFGSettings = lfg.defaults
   end
   lfg.loadOptions()
+  lfg.registerMiniMap()
 end
 
 -- Register Events Frame to OnEvent handler of Main Frame
