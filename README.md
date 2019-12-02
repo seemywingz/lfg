@@ -86,7 +86,7 @@ If some Options UI elements aren't showing up after an update, click the `Defaul
 &nbsp;  
 
 ## 🎉Version 1.4.0 Updates! 
-### Add MinMap Button 😅
+### Add MinMap Button 🌎
 * **LFG** Is noa accessable from the MiniMap Button 👏
 * Left Click the Button to open the Configuration Page
 * Right Click to Toggle Enabled/Disabled
