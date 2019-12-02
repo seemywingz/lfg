@@ -85,6 +85,11 @@ If some Options UI elements aren't showing up after an update, click the `Defaul
 &nbsp;  
 &nbsp;  
 
+## 🎉Version 1.4.0 Updates! 
+### Add MinMap Button 😅
+* **LFG** Is noa accessable from the MiniMap Button 👏
+* Left Click the Button to open the Configuration Page
+* Right Click to Toggle Enabled/Disabled
 
 ## 🎉Version 1.3.0 Updates!  
 ### Ignore Message Sent By You 😅
@@ -94,7 +99,7 @@ If some Options UI elements aren't showing up after an update, click the `Defaul
 * Configure the Custom Message in the Auto Post text box
 * Set the timeout delay by dragging the `Delay Seconds` slider
 
-## 🎉Version 1.2.3 has some **MAJOR** Updates!   👏👏 👏
+## 🎉Version 1.2.3 has some **MAJOR** Updates!   👏👏👏
 ### Dynamic Channels
 * Channels are now Dynamically generated from your current list of chanels
 * Reload `Defaults` to puckup channel changes...  
