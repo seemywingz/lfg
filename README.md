@@ -86,6 +86,14 @@ If some Options UI elements aren't showing up after an update, click the `Defaul
 &nbsp;  
 
 ## 🎉Version 1.4.0 Updates! 
+### Add Ignore List 🚫
+* **LFG** Will now Ignore Messages from Players in your "Ignore List"
+* To add a player to your Ignore List, just click the "Ignore" button on an **LFG** popup
+* Players are NOT automatically ignored if the notification times out
+* Click the "Clear Ignore List" button to, well, clear the ignore list
+* Future updatres will allow you to manually add/remove individual players
+
+## 🎉Version 1.4.0 Updates! 
 ### Add MinMap Button 🌎
 * **LFG** Is noa accessable from the MiniMap Button 👏
 * Left Click the Button to open the Configuration Page
