@@ -6,7 +6,6 @@ function lfg.registerMiniMap()
   local LDBIcon = LDB and LibStub ("LibDBIcon-1.0", true)
   
   if LDB then
-    print("YESSSS LDB LOADED")
 
     local databroker = LDB:NewDataObject ("LFG", {
       type = "data source",
