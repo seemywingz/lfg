@@ -13,6 +13,7 @@ lfg.defaults = {
   autoPostDelay = 30,
   autoPostText = "LFG",
   autoPostTicker = {},
+  ignoreList = {},
 
 
   criteria = {
@@ -53,6 +54,15 @@ function lfg.handleChatEvent(...)
   local currentPlayer, realm = UnitName("player")
   if fromPlayer == currentPlayer then return end -- Ignore the Message if sent by the Player
 
+  for i, ignoredPlayer in ipairs(LFGSettings.ignoreList) do
+    if fromPlayer == ignoredPlayer   then
+      print("LFG Ignored " .. ignoredPlayer)
+      return -- don't process messages from ignored players
+    end
+    
+  end
+  
+
   for channelNumber, listening in pairs(LFGSettings.channel) do
     if eventChannel:find(channelNumber) and listening then
       lfg.parseMSG(msg, fromPlayer, channelNumber)
@@ -92,7 +102,11 @@ function lfg.parseMSG(msg, playerName, channelNumber)
         InviteUnit(playerName)
       end
     end
-    lfg.shoPopUp(playerLink.." "..msg, 30, "Whisper", "Invite", "Ignore", whisperCB, inviteCB)
+    local ignoreCB = function(_, _, reason)
+      print("LFG Ignoring: " .. playerName)
+      table.insert(LFGSettings.ignoreList, playerName)
+    end
+    lfg.shoPopUp(playerLink.." "..msg, 30, "Whisper", "Invite", "Ignore", whisperCB, inviteCB, ignoreCB)
 
     if LFGSettings.autoWhisper then
       whisperCB()

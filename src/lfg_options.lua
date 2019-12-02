@@ -6,7 +6,6 @@ function lfg.registerMiniMap()
   local LDBIcon = LDB and LibStub ("LibDBIcon-1.0", true)
   
   if LDB then
-    print("YESSSS LDB LOADED")
 
     local databroker = LDB:NewDataObject ("LFG", {
       type = "data source",
@@ -154,6 +153,12 @@ function lfg.loadOptions()
     lfg.refreshInterfaceOptions(lfg.loadOptions)
   end)
   lfg.panel.refreshBTN:SetSize(80 ,22) -- width, height
+
+  lfg.panel.clearIgnoreBTN = lfg.createButton(lfg.panel, "Clear Ignore List", "LEFT", lfg.panel.refreshBTN, "RIGHT", function()
+    print("LFG Clearing Ignore List...")
+    LFGSettings.ignoreList = {}
+  end)
+  lfg.panel.clearIgnoreBTN:SetSize(150 ,22) -- width, height
 
   -- Panel Event Callbacks
   function lfg.panel.okay()

@@ -3,7 +3,7 @@
 ## Title: LFG
 ## Notes: WoW Classic LFG Helper
 ## Author: SeeMyWings
-## Version: 1.4.0
+## Version: 1.4.1
 ## SavedVariablesPerCharacter: LFGSettings
 ## OptionalDeps: LibStub, LibDBIcon-1.0, LibDataBroker-1.1
 
