@@ -85,6 +85,16 @@ If some Options UI elements aren't showing up after an update, click the `Defaul
 &nbsp;  
 &nbsp;  
 
+### TODO:
+* Work on RU localization and character matching
+* Remove LFG duplication from players that post in multiple channels
+* Update Ignore list e.g. manually add/remove
+
+&nbsp;  
+## 🎉Version 1.4.2 Minor Updates! 
+### Bump minor version and WoW Game Version
+* **LFG** is now compatible with Game Version `1.13.03`
+
 ## 🎉Version 1.4.1 Updates! 
 ### Add Ignore List 🚫👂
 * **LFG** Will now Ignore Messages from Players in your "Ignore List"
