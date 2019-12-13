@@ -1,9 +1,9 @@
 #/run print((select(4, GetBuildInfo())));
-## Interface: 11302
+## Interface: 11303
 ## Title: LFG
 ## Notes: WoW Classic LFG Helper
 ## Author: SeeMyWings
-## Version: 1.4.1
+## Version: 1.4.2
 ## SavedVariablesPerCharacter: LFGSettings
 ## OptionalDeps: LibStub, LibDBIcon-1.0, LibDataBroker-1.1
 
