@@ -62,7 +62,6 @@ function lfg.handleChatEvent(...)
     
   end
   
-
   for channelNumber, listening in pairs(LFGSettings.channel) do
     if eventChannel:find(channelNumber) and listening then
       lfg.parseMSG(msg, fromPlayer, channelNumber)
