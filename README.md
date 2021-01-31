@@ -10,6 +10,7 @@ Just tell **LFG** what criteria to watch for e.g. `LFG DPS RFC`
 and **LFG** will allert you when there is a match!  
 **LFG** works for more than just goup searches...  
 Tell **LFG** to watch for `WTB` or `WTS` chat messages too, the possibilities are literally endless ∞
+##### ⚠️ P.S. Don't Forget to Join the Chat Channel You Want to Watch: `/join lookingforgroup`
 
 ### Options:
 Enable/Disable  
