@@ -91,6 +91,11 @@ If some Options UI elements aren't showing up after an update, click the `Defaul
 * Update Ignore list e.g. manually add/remove
 
 &nbsp;  
+## 🎉🙀Version 1.4.3 Minor Updates! 
+![Praise the Sun](./img/praisehtesun.gif)
+### Bump minor version and WoW Game Version
+* **LFG** is now compatible with Game Version `1.13.06` 
+
 ## 🎉Version 1.4.2 Minor Updates! 
 ### Bump minor version and WoW Game Version
 * **LFG** is now compatible with Game Version `1.13.03`
