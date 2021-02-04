@@ -8,6 +8,9 @@ function events:CHAT_MSG_CHANNEL(...) -- Fired when the client receives a channe
   lfg.handleChatEvent(...)
 end
 
+function events:CURSOR_UPDATE(...) -- Fired when the player right-clicks terrain, and on mouseover before UPDATE_MOUSEOVER_UNIT and on mouseout after UPDATE_MOUSEOVER_UNIT. This excludes doodads, player characters, and NPCs that lack interaction.
+end
+
 function events:PLAYER_LOGIN(...) -- Player is Logged In
   print("LFG Loaded: /lfg help")
   local current = GetAddOnMetadata(addonName, "Version")

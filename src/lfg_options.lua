@@ -117,33 +117,34 @@ function lfg.loadOptions()
   lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
 
   -- Auto Post
-  lfg.panel.autoPostTitle = lfg.createTitle(lfg.panel, "Auto Post:", "TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT")
-  lfg.panel.autoPostCheckBox = lfg.createCheckBox(lfg.panel, "", "LEFT", lfg.panel.autoPostTitle, "RIGHT", function(self)
-    LFGSettings.autoPost = self:GetChecked()
-    if LFGSettings.autoPost then
-      lfg.panel.okay()
-      print("LFG Auto Post Enabled!")
-      lfg.postInChannels()
-      LFGSettings.autoPostTicker =  C_Timer.NewTicker(LFGSettings.autoPostDelay, function(args)
-        lfg.postInChannels()
-      end)
-    else
-      print("LFG Auto Post Canceled!")
-      LFGSettings.autoPostTicker._cancelled = true
-    end
-  end)
-  lfg.panel.autoPostCheckBox:SetChecked(LFGSettings.autoPost)
-  lfg.panel.autoPostSlider = lfg.createSlider(lfg.panel, 1, 300, LFGSettings.autoPostDelay, 1, "Delay Seconds", "TOPLEFT", lfg.panel.autoPostTitle, "BOTTOMLEFT", function(self, value)
-    local newDelay = floor(value)
-    LFGSettings.autoPostDelay = newDelay
-    _G[self:GetName() .. 'Text']:SetText("Delay Seconds: " .. newDelay);
-  end
-  )
-  lfg.panel.autoPostSlider.tooltipText = "Posts Supplied Message in Selected Channels at given interval"
-  lfg.panel.autoPostEditBox = lfg.createEditBox(lfg.panel, LFGSettings.autoPostText, "TOPLEFT", lfg.panel.autoPostSlider, "BOTTOMLEFT")
+  -- lfg.panel.autoPostTitle = lfg.createTitle(lfg.panel, "Auto Post:", "TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT")
+  -- lfg.panel.autoPostCheckBox = lfg.createCheckBox(lfg.panel, "", "LEFT", lfg.panel.autoPostTitle, "RIGHT", function(self)
+  --   LFGSettings.autoPost = self:GetChecked()
+  --   if LFGSettings.autoPost then
+  --     lfg.panel.okay()
+  --     print("LFG Auto Post Enabled!")
+  --     -- lfg.postInChannels()
+  --     -- lfg.autoPost()
+  --     -- LFGSettings.autoPostTicker =  C_Timer.After(LFGSettings.autoPostDelay, function(args)
+  --     --   lfg.postInChannels()
+  --     -- end)
+  --   else
+  --     print("LFG Auto Post Canceled!")
+  --     -- LFGSettings.autoPostTicker._cancelled = true
+  --   end
+  -- end)
+  -- lfg.panel.autoPostCheckBox:SetChecked(LFGSettings.autoPost)
+  -- -- lfg.panel.autoPostSlider = lfg.createSlider(lfg.panel, 1, 300, LFGSettings.autoPostDelay, 1, "Delay Seconds", "TOPLEFT", lfg.panel.autoPostTitle, "BOTTOMLEFT", function(self, value)
+  -- --   local newDelay = floor(value)
+  -- --   LFGSettings.autoPostDelay = newDelay
+  -- --   _G[self:GetName() .. 'Text']:SetText("Delay Seconds: " .. newDelay);
+  -- -- end
+  -- -- )
+  -- -- lfg.panel.autoPostSlider.tooltipText = "Posts Supplied Message in Selected Channels at given interval"
+  -- lfg.panel.autoPostEditBox = lfg.createEditBox(lfg.panel, LFGSettings.autoPostText, "TOPLEFT", lfg.panel.autoPostTitle, "BOTTOMLEFT")
 
   -- Buttons
-  lfg.panel.saveBTN = lfg.createButton(lfg.panel, "Save", "TOPLEFT", lfg.panel.autoPostEditBox, "BOTTOMLEFT", function()
+  lfg.panel.saveBTN = lfg.createButton(lfg.panel, "Save", "TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT", function()
     lfg.panel.okay()
     print("LFG Configs Saved!")
   end)
@@ -167,7 +168,7 @@ function lfg.loadOptions()
         LFGSettings.criteria[i] = eb:GetText():ToTable()
       end
       LFGSettings.whisperText = lfg.panel.whisperEditBox:GetText()
-      LFGSettings.autoPostText = lfg.panel.autoPostEditBox:GetText()
+      -- LFGSettings.autoPostText = lfg.panel.autoPostEditBox:GetText()
 
   end
 
