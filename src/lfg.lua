@@ -107,9 +107,9 @@ function lfg.parseMSG(msg, playerName, channelNumber)
     end
     lfg.shoPopUp(playerLink.." "..msg, 30, "Whisper", "Invite", "Ignore", whisperCB, inviteCB, ignoreCB)
 
-    if LFGSettings.autoWhisper then
-      whisperCB()
-    end
+    -- if LFGSettings.autoWhisper then
+    --   whisperCB()
+    -- end
     
     if LFGSettings.autoInvite then
       inviteCB(nil,nil,"clicked" )

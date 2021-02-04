@@ -101,20 +101,23 @@ function lfg.loadOptions()
     relFrame = title
   end
 
-  -- Auto Whisper Check Box
-  lfg.panel.autoRespTitle = lfg.createTitle(lfg.panel, "Auto Response:", "TOPLEFT", relFrame, "BOTTOMLEFT")
-  lfg.panel.whisperCB = lfg.createCheckBox(lfg.panel, "Whisper:", "TOPLEFT", lfg.panel.autoRespTitle, "BOTTOMLEFT", function(self)
-    lfg.panel.okay()
-    LFGSettings.autoWhisper = self:GetChecked()
-  end)
-  lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
-  lfg.panel.whisperEditBox = lfg.createEditBox(lfg.panel, LFGSettings.whisperText, "LEFT", lfg.panel.whisperCB, "RIGHT")
-  lfg.panel.whisperEditBox:SetPoint("LEFT", lfg.panel.whisperCB, "RIGHT", 80, 0)
-
-  lfg.panel.inviteCB = lfg.createCheckBox(lfg.panel, "Invite", "TOPLEFT", lfg.panel.whisperCB, "BOTTOMLEFT", function(self)
+  -- Auto Invite Check Box
+  lfg.panel.autoInviteTitle = lfg.createTitle(lfg.panel, "Auto Invite:", "TOPLEFT", relFrame, "BOTTOMLEFT")
+  lfg.panel.inviteCB = lfg.createCheckBox(lfg.panel, "", "LEFT", lfg.panel.autoInviteTitle, "RIGHT", function(self)
     LFGSettings.autoInvite = self:GetChecked()
   end)
   lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)
+
+  -- Auto Whisper Check Box
+  lfg.panel.whisperMessageTitle = lfg.createTitle(lfg.panel, "Whisper:", "TOPLEFT", lfg.panel.autoInviteTitle, "BOTTOMLEFT")
+  lfg.panel.whisperEditBox = lfg.createEditBox(lfg.panel, LFGSettings.whisperText, "LEFT", lfg.panel.whisperMessageTitle, "RIGHT")
+  lfg.panel.whisperEditBox:SetPoint("LEFT", lfg.panel.whisperMessageTitle, "RIGHT", 10, 0)
+  -- lfg.panel.whisperCB = lfg.createCheckBox(lfg.panel, "Whisper:", "TOPLEFT", lfg.panel.whisperMessageTitle, "BOTTOMLEFT", function(self)
+  --   lfg.panel.okay()
+  --   LFGSettings.autoWhisper = self:GetChecked()
+  -- end)
+  -- lfg.panel.whisperCB:SetChecked(LFGSettings.autoWhisper)
+
 
   -- Auto Post
   -- lfg.panel.autoPostTitle = lfg.createTitle(lfg.panel, "Auto Post:", "TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT")
@@ -144,7 +147,7 @@ function lfg.loadOptions()
   -- lfg.panel.autoPostEditBox = lfg.createEditBox(lfg.panel, LFGSettings.autoPostText, "TOPLEFT", lfg.panel.autoPostTitle, "BOTTOMLEFT")
 
   -- Buttons
-  lfg.panel.saveBTN = lfg.createButton(lfg.panel, "Save", "TOPLEFT", lfg.panel.inviteCB, "BOTTOMLEFT", function()
+  lfg.panel.saveBTN = lfg.createButton(lfg.panel, "Save", "TOPLEFT", lfg.panel.whisperMessageTitle, "BOTTOMLEFT", function()
     lfg.panel.okay()
     print("LFG Configs Saved!")
   end)
