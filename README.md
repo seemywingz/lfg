@@ -92,6 +92,11 @@ If some Options UI elements aren't showing up after an update, click the `Defaul
 * Update Ignore list e.g. manually add/remove
 
 &nbsp;  
+## 🎉Version 1.5.0 Minor Update! 
+### Remove "Auto Post" Feature
+* `SendChatMessage()` Is Now a Protected Function  
+  There will be a workaround implemented soon  
+  Till then, The option is removed from the UI
 ## 🎉🙀Version 1.4.3 Minor Updates! 
 ![Praise the Sun](./img/praisehtesun.gif)
 ### Bump minor version and WoW Game Version
