@@ -1,17 +1,6 @@
 local addonName, ns = ...
 
 -- String Helpers
-function string:Split(sep)
-  if sep == nil then
-    sep = "%s"
-  end
-  local t={}
-  for str in string.gmatch(self, "([^"..sep.."]+)") do
-      table.insert(t, str)
-  end
-  return t
-end
-
 function string:FindI(pattern)
   -- find an optional '%' (group 1) followed by any character (group 2)
   local p = pattern:gsub("(%%?)(.)", function(percent, letter)
@@ -34,17 +23,8 @@ function string:ToTable()
   return t or {}
 end
 
--- Table Helpers
-function table.ToString(t)
-  local s = " "
-  for k,v in pairs(t) do
-    s = s .." ".. v
-  end
-  return s
-end
-
-function table.RemoveLast(t)
-  table.remove (t, table.getn(t))
+function ns.combineCriteria(t)
+  return strjoin(" ", unpack(t))
 end
 
 -- Interface Addon UI Components

@@ -88,7 +88,7 @@ function lfg.loadOptions()
   lfg.panel.critAddBTN:SetSize(20 ,22) -- width, height
 
   lfg.panel.critRemoveBTN = lfg.createButton(lfg.panel, "-", "LEFT", lfg.panel.critAddBTN, "RIGHT", function()
-    table.RemoveLast(LFGSettings.criteria)
+    table.remove(LFGSettings.criteria)
     lfg.refreshInterfaceOptions(lfg.loadOptions)
   end)
   lfg.panel.critRemoveBTN:SetSize(20 ,22) -- width, height
@@ -96,7 +96,7 @@ function lfg.loadOptions()
   relFrame = lfg.panel.critTitle
   for i,crit in ipairs(LFGSettings.criteria) do
     local title = lfg.createTitle(lfg.panel, "  "..i..":  ", "TOPLEFT", relFrame, "BOTTOMLEFT")
-    local eb = lfg.createEditBox(lfg.panel, table.ToString(LFGSettings.criteria[i]), "LEFT", title, "RIGHT")
+    local eb = lfg.createEditBox(lfg.panel, lfg.combineCriteria(LFGSettings.criteria[i]), "LEFT", title, "RIGHT")
     table.insert(lfg.panel.critEditBox, eb)
     relFrame = title
   end
@@ -189,7 +189,7 @@ function lfg.loadOptions()
       end
 
       for i,eb in ipairs(lfg.panel.critEditBox) do
-        eb:SetText(table.ToString(LFGSettings.criteria[i]))
+        eb:SetText(lfg.combineCriteria(LFGSettings.criteria[i]))
       end
   
       lfg.panel.inviteCB:SetChecked(LFGSettings.autoInvite)

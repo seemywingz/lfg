@@ -50,7 +50,7 @@ function lfg.handleChatEvent(...)
   if not LFGSettings.enabled  then return value  end
   local msg, fromPlayerRealm, _, eventChannel = ...
 
-  local fromPlayer = fromPlayerRealm:Split("-")[1]  -- chat event returns "playername-servername", so we split on `-` and take the first value
+  local fromPlayer = strsplit("-", fromPlayerRealm)  -- chat event returns "playername-servername", so we split on `-` and take the first value
   local currentPlayer, realm = UnitName("player")
   if fromPlayer == currentPlayer then return end -- Ignore the Message if sent by the Player
 
